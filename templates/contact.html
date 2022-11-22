@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %} 
+<!-- adapted form https://getbootstrap.com/docs/5.2/forms/overview/-->
+<div class="container center">
+    <form class="row g-3">
+        <div>
+            <label>First Name</label>
+            <input class="form-control" type="text" id="FirstName" placeholder="Messi" required>
+        </div>
+        <div>
+            <label>Last Name</label>
+            <input class="form-control" type="text" id="LastName" placeholder="Cristiano" required>
+        </div>
+        <div>
+            <label>email</label>
+            <input class="form-control" type="email" id="Email" placeholder="@email.com" required>  
+        </div>
+        <div>
+            <label>Number</label>
+            <input class="form-control" type="number" id="Number" placeholder="012345678" required>
+        </div>
+        <div>
+            <label>Comments</label>
+            <textarea class="form-control" placeholder="Leave comment here" id="floatingTextarea" required></textarea>
+        </div>
+
+        <div>
+        <input class="btn btn-primary" type="submit" value="Submit">
+        </div>
+    </form>
+</div>
+<!--end of adapted code-->
+<center><p>Cardiff University, Cardiff, Wales CF10 3AT UK <br> <b>Phone:</b> +44 (0)29 2087 4000  <b>Fax:</b> +44 (0)29 2087 4000 <br> enquiry@cardiff.ac.uk</p> </center>
+
+{% endblock %}

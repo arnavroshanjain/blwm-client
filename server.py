@@ -10,6 +10,9 @@ def get_db_connection():
 @app.route('/')
 def homepage():
     return render_template('homepage.html')
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
     
 if __name__ == "__main__":
  app.run(debug=True)
