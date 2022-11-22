@@ -1,21 +1,21 @@
-
-
 {% extends 'base.html' %}
 {% block content %}
-<<!DOCTYPE html>
-  <head>
-    <title>Sign Up</title>
-  </head>
-  <body>
-    <form>
-      <label>First name:</label><br>
-      <input type="text" id="name"><br>
-      <label>Last name:</label><br>
-      <input type="text" id="lastName"><br>
-      <label>Username:</label> <br>
-      <input id="username" type="name"><br>
-      <label>Password:</label><br>
-      <input id="password" type="password"><br>
+    <form onsubmit="return send_register()" method='post'>
+      <label>First name:</label>
+      <input id="name" type="text"><br>
+      <label>Last name:</label>
+      <input id="lastName" type="text"><br>
+      <label>Email:</label>
+      <input id="email" type="text"> <br>
+      <label>Password:</label>
+      <input id="password" type="text">
+
+      <button class="btn btn-primary" type="submit">Submit</button>
+
     </form>
-  </body>
+
+
+
+
+
 {% endblock %}
