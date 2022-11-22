@@ -15,15 +15,26 @@ def homepage():
 @app.route('/login', methods=["POST","GET"])
 def loginPage():
     return render_template('loginPage.html',title="Login Page")
+
+@app.route('/login_request', methods=["POST","GET"])
+def login_request():
+    print("test")
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+    conn=get_db_connection()
+    users = conn.execute('SELECT * FROM tbl_users').fetchall()
+    conn.close()
 
-        for userID, user in dictUsers.items():
-            if user['email'] == email and user['password'] == password:
-                session['userID'] = userID
-                return 'True'
-    return 'Login failed'
+    for i in users:
+        print(email,i["email"], password, i["password"])
+        if email == i['email'] and password == i['password']:
+            session['email'] = i['email']
+            print(f"the email is:{email}")
+            print(f"the pass is:{password}")
+            return 'True'
+    return 'email or password incorect please try again'
+
 
 @app.route('/logout')
 def logout():
