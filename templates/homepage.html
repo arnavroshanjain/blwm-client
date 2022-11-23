@@ -1,3 +1,47 @@
 {% extends 'base.html' %}
-{% block content %} 
+{% block content %}
+
+    <div id="landing_page">
+        <div class="container-fluid h-full d-flex justify-content-center align-items-center" id="title">
+            <div class="col-5 text-center">
+                <h1>BLWM</h1>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Harum, vero.</p>
+                <div class="row">
+                    <div class="col">
+                        <a class="btn btn-primary rounded-pill ps-5 pe-5 pt-2 pb-2" href="#teacher" role="button">I'm a teacher <i class="bi bi-arrow-right ps-1"></i></i></a>
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-primary rounded-pill ps-5 pe-5 pt-2 pb-2" href="#school" role="button">I'm a school <i class="bi bi-arrow-right ps-1"></i></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container h-full d-flex align-items-center" id="teacher">
+            <div class="row d-flex align-items-center">
+                <div class="col-6">
+                    <h2>Helping you find placements</h2>
+                    <a class="btn btn-primary rounded-pill ps-5 pe-5 pt-2 pb-2" href="#" role="button">Get started <i class="bi bi-arrow-right ps-1"></i></i></a>
+                </div>
+                <div class="col-6">
+                    <img class="img-fluid rounded" src="{{ url_for('static', filename='images/network.jpg') }}" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid bg-dark">
+            <div class="container h-full d-flex align-items-center" id="school">
+                <div class="row d-flex align-items-center">
+                    <div class="col-6">
+                        <img class="img-fluid rounded" src="{{ url_for('static', filename='images/network.jpg') }}" alt="">
+                    </div>
+                    <div class="col-6 text-light">
+                        <h2>Getting you the teachers you need</h2>
+                        <a class="btn btn-primary rounded-pill ps-5 pe-5 pt-2 pb-2" href="#" role="button">Get started <i class="bi bi-arrow-right ps-1"></i></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
