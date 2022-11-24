@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+    
+    <form>
+        <div class="mb-3">
+            <label for="school_name" class="form-label">School name</label>
+            <input type="text" class="form-control" id="school_name">
+        </div>
+        <div class="mb-3">
+            <label for="school_address" class="form-label">School address</label>
+            <input type="text" class="form-control" id="school_address">
+        </div>
+        <div class="mb-3">
+            <label for="school_email" class="form-label">School email</label>
+            <input type="password" class="form-control" id="school_email">
+        </div>
+        <div class="mb-3">
+            <label for="school_phone_number" class="form-label">School phone number</label>
+            <input type="password" class="form-control" id="school_phone_number">
+        </div>
+        <form action="/action_page.php">
+            <label for="">School logo</label>
+            <input type="file" id="school_logo" name="school_logo">
+            <input class="btn btn-primary" type="submit">
+        </form>
+        <div class="mb-3">
+            <label for="school_website" class="form-label">School website</label>
+            <input type="password" class="form-control" id="school_website">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+{% endblock %}
