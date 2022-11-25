@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <h1 align="center">Welcome to the Login Page</h1>
+
+    <form onsubmit="return login_function()">
+      <!-- Adapted from https://getbootstrap.com/docs/5.2/forms/overview/-->
+      <div class="mb-3">
+        <label for="inputEmail" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="inputEmail" name="inputEmail">
+      </div>
+      <div class="mb-3">
+        <label for="inputPassword" class="form-label">Password</label>
+        <input type="password" class="form-control" id="inputPassword" name="inputPassword">
+      </div>
+      <button type="submit" class="btn btn-primary" name="button">Submit</button>
+      <!-- end of adapted code -->
+    </form>
+
+{% endblock %}
