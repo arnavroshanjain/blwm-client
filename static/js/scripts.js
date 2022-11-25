@@ -1,18 +1,23 @@
 function login_function() {
-  var email = document.getElementById('exampleInputEmail1').value;
-  var password = document.getElementById('exampleInputPassword1').value;
+
+  var email = document.getElementById('inputEmail').value;
+  var password = document.getElementById('inputPassword').value;
   var params = 'email='+email+'&password='+password;
-  window.alert(response)
+
   var xhttp = new XMLHttpRequest();
   xhttp.open('POST', 'login_request', true);
   xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
-        var response = xhttp.responseText;#
+        var response = xhttp.responseText;
+        window.alert(response);
+        if (response=="True"){
+          window.alert("you have been logged in");
+          window.location.replace('../');
+        }else{
 
-// fix error here
+          window.alert(response)
 
-//insert stuff
         }
       } else {
         console.error(xhttp.statusText);

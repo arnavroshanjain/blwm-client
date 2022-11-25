@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, session, redirect, url_for
 import sqlite3
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = 'SuperSecretKey'
+
 def get_db_connection():
     conn = sqlite3.connect('blwmDB.db')
     conn.row_factory = sqlite3.Row
@@ -29,7 +31,7 @@ def login_request():
     for i in users:
         print(email,i["email"], password, i["password"])
         if email == i['email'] and password == i['password']:
-            session['email'] = i['email']
+            session['login'] = i['user_id']
             print(f"the email is:{email}")
             print(f"the pass is:{password}")
             return 'True'
