@@ -2,30 +2,30 @@
 {% block content %} 
 <!-- adapted form https://getbootstrap.com/docs/5.2/forms/overview/-->
 <div class="container center">
-    <form class="row g-3">
+    <form class="row g-3" onsubmit="return contact()" method ='post'>
         <div>
             <label>First Name</label>
-            <input class="form-control" type="text" id="FirstName" placeholder="Messi" required>
+            <input class="form-control" type="text" id="first_name" placeholder="Messi" required>
         </div>
         <div>
             <label>Last Name</label>
-            <input class="form-control" type="text" id="LastName" placeholder="Cristiano" required>
+            <input class="form-control" type="text" id="last_name" placeholder="Cristiano" required>
         </div>
         <div>
             <label>email</label>
-            <input class="form-control" type="email" id="Email" placeholder="@email.com" required>  
+            <input class="form-control" type="email" id="email" placeholder="@email.com" required>  
         </div>
         <div>
             <label>Number</label>
-            <input class="form-control" type="number" id="Number" placeholder="012345678" required>
+            <input class="form-control" type="number" id="number" placeholder="012345678" required>
         </div>
         <div>
-            <label>Comments</label>
-            <textarea class="form-control" placeholder="Leave comment here" id="Comment" required></textarea>
+            <label>Comments</label>2
+            <textarea class="form-control" placeholder="Leave comment here" id="comment" required></textarea>
         </div>
 
         <div>
-        <input class="btn btn-primary" type="submit" value="Submit">
+        <button class="btn btn-primary" type="submit">Submit</button>
         </div>
     </form>
 </div>
