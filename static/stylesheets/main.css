@@ -1,3 +1,16 @@
 :root {
     --accent: #3C6997;
 }
+
+
+.btn-color{
+  background-color: #EEC383!important;
+}
+
+.btn-color:hover{
+  background-color: #d6af75
+}
+
+body{
+  background-color: #FFFFEA!important;
+}

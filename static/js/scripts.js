@@ -15,10 +15,10 @@ function send_register(){
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState === 4 && xhttp.status === 200) {
       var response = xhttp.responseText;
-      if (response == 'True') {
+      if (response == 'true') {
         window.location.replace('../');
       } else {
-        document.getElementById('error_output').innerHTML = response;
+        window.alert(response)
       }
     } else {
       console.error(xhttp.statusText);

@@ -29,7 +29,7 @@ def registerRequest():
 
 
     conn = get_db_connection()
-    conn.execute('INSERT INTO tbl_users (first_name, last_name, email, password,supply_teacher) VALUES (?, ?, ?, ?,1)',
+    conn.execute('INSERT INTO tbl_users (first_name, last_name, email, password,supply_teacher) VALUES (?, ?, ?, ?,0)',
     (name, lastName, email, password))
     conn.commit()
     conn.close()
