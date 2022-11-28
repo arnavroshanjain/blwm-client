@@ -2,25 +2,25 @@
 {% block content %}
 
 <div class="login_page_background">
-  <div class="container-fluid">
-    <h1 align="center">Welcome to the Login Page</h1>
+  <div class="container">
+          <h1 align="center">Welcome to the Login Page</h1>
+            <form onsubmit="return login_function()">
+              <!-- Adapted from https://getbootstrap.com/docs/5.2/forms/overview/-->
+              <div class="mb-3">
+                <label for="inputEmail" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="inputEmail" name="inputEmail">
+              </div>
+              <div class="mb-3">
+                <label for="inputPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="inputPassword" name="inputPassword">
+              </div>
+              <div class="col text-center">
+                <button  type="submit" class="btn btn-warning" name="button">Submit</button>
+              </div>
 
-      <form onsubmit="return login_function()">
-        <!-- Adapted from https://getbootstrap.com/docs/5.2/forms/overview/-->
-        <div class="mb-3">
-          <label for="inputEmail" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="inputEmail" name="inputEmail">
-        </div>
-        <div class="mb-3">
-          <label for="inputPassword" class="form-label">Password</label>
-          <input type="password" class="form-control" id="inputPassword" name="inputPassword">
-        </div>
-        <div class="col text-center">
-          <button  type="submit" class="btn btn-warning" name="button">Submit</button>
-        </div>
         <!-- end of adapted code -->
 
-      </form>
+            </form>
   </div>
 </div>
 
