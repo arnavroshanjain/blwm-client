@@ -2,7 +2,7 @@
 {% block content %}
 
     <div class="container">
-        <h1>
+        <h1 class="pt-3 pb-3 title">
             Create school.
         </h1>
         <form onsubmit="return create_school_request()">
@@ -22,8 +22,10 @@
                 <label for="school_phone_number" class="form-label">School phone number</label>
                 <input type="text" class="form-control" id="school_phone_number" name="school_phone_number">
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="">School logo</label>
+            </div>
+            <div class="mb-3">
                 <input type="file" id="school_logo" name="school_logo" name="school_logo">
             </div>
             <div class="mb-3">
