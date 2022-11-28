@@ -35,16 +35,31 @@ def contact_request():
 	conn.commit()
 	conn.close()
 	return 'true'
-	
 
-    return render_template('homepage.html')
+@app.route('/register/school')
+def create_school():
+    return render_template('create_school.html')
+
+@app.route('/register/school_request', methods=['POST', 'GET'])
+def create_school_request():
+    if request.method == 'POST': 
+        name = request.form['name']
+        address = request.form['address']
+        email = request.form['email']
+        phone_number = request.form['phone_number']
+        # logo = request.files['logo']
+        website = request.form['website']
+        conn = get_db_connection()
+        conn.execute('INSERT INTO tbl_schools (school_name, school_address, school_logo, school_email, school_phone_number, school_website,creator_user_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        (name, address, 'logo', email, phone_number, website, session['login']))
+        conn.commit()
+        conn.close()
+        return 'True'
+    return 'Failed to create school, please try again.'
 
 @app.route('/signUp')
 def signUp():
     return render_template('signUp.html')
-
-
-
 
 @app.route('/register_request', methods=['POST','GET'])
 def registerRequest():
@@ -85,7 +100,6 @@ def login_request():
             print(f"the pass is:{password}")
             return 'True'
     return 'email or password incorect please try again'
-
 
 @app.route('/logout')
 def logout():
