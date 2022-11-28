@@ -1,33 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
-    
-    <form>
-        <div class="mb-3">
-            <label for="school_name" class="form-label">School name</label>
-            <input type="text" class="form-control" id="school_name">
-        </div>
-        <div class="mb-3">
-            <label for="school_address" class="form-label">School address</label>
-            <input type="text" class="form-control" id="school_address">
-        </div>
-        <div class="mb-3">
-            <label for="school_email" class="form-label">School email</label>
-            <input type="password" class="form-control" id="school_email">
-        </div>
-        <div class="mb-3">
-            <label for="school_phone_number" class="form-label">School phone number</label>
-            <input type="password" class="form-control" id="school_phone_number">
-        </div>
-        <form action="/action_page.php">
-            <label for="">School logo</label>
-            <input type="file" id="school_logo" name="school_logo">
-            <input class="btn btn-primary" type="submit">
+
+    <div class="container">
+        <h1>
+            Create school.
+        </h1>
+        <form onsubmit="return create_school_request()">
+            <div class="mb-3">
+                <label for="school_name" class="form-label">School name</label>
+                <input type="text" class="form-control" id="school_name" name="school_name">
+            </div>
+            <div class="mb-3">
+                <label for="school_address" class="form-label">School address</label>
+                <input type="text" class="form-control" id="school_address" name="school_address">
+            </div>
+            <div class="mb-3">
+                <label for="school_email" class="form-label">School email</label>
+                <input type="email" class="form-control" id="school_email" name="school_email">
+            </div>
+            <div class="mb-3">
+                <label for="school_phone_number" class="form-label">School phone number</label>
+                <input type="text" class="form-control" id="school_phone_number" name="school_phone_number">
+            </div>
+            <div class="mb-3">
+                <label for="">School logo</label>
+                <input type="file" id="school_logo" name="school_logo" name="school_logo">
+            </div>
+            <div class="mb-3">
+                <label for="school_website" class="form-label">School website</label>
+                <input type="text" class="form-control" id="school_website" name="school_website">
+            </div>
+            <button type="submit" class="btn btn-color">Submit</button>
         </form>
-        <div class="mb-3">
-            <label for="school_website" class="form-label">School website</label>
-            <input type="password" class="form-control" id="school_website">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </div>
 
 {% endblock %}
