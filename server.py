@@ -16,8 +16,6 @@ def signUp():
     return render_template('signUp.html')
 
 
-
-
 @app.route('/register_request', methods=['POST','GET'])
 def registerRequest():
 
