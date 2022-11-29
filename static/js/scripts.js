@@ -3,10 +3,11 @@ function send_register(){
   var lastName = document.getElementById('lastName').value;
   var email = document.getElementById('email').value;
   var password = document.getElementById('password').value;
-  var params = 'name='+name+'&lastName='+lastName+'&email='+email+'&password='+password;
+  var logo = document.getElementById('school_logo').value;
+  var params = 'name='+name+'&lastName='+lastName+'&email='+email+'&password='+password+'&logo='+logo;
   var xhttp = new XMLHttpRequest();
   xhttp.open('POST', 'register_request', true);
-  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  xhttp.setRequestHeader('Content-type', 'multipart/form-data');
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState === 4 && xhttp.status === 200) {
       var response = xhttp.responseText;

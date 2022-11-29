@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 
-:root {
-    --accent: #3C6997;
-}
-
 .btn-color{
   background-color: #EEC383!important;
 }
@@ -46,4 +42,9 @@ body{
 
 .title {
     color: #FF4A47;
+}
+
+.select-pfp {
+    width: 150px;
+    height: 150px;
 }
