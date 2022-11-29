@@ -1,5 +1,5 @@
 <!-- adapted from https://getbootstrap.com/docs/5.2/components/navbar/#nav -->
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg bg-light fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" href="{{url_for('homepage')}}">BLWM</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,8 +13,7 @@
         </ul>
         <form class="container-fluid justify-content-start" align="right">
           <a href="{{url_for('loginPage')}}"><button class="btn btn-sm btn-outline-secondary" type="button">Login</button></a>
-          <!-- change the url to signUp function (didnt do it because the server doesnt work) -->
-          <a href="{{url_for('loginPage')}}"><button class="btn btn-sm btn-outline-secondary" type="button">Signup</button></a>
+          <a href="{{url_for('signUp')}}"><button class="btn btn-sm btn-outline-secondary" type="button">Signup</button></a>
         </form>
       </div>
     </div>
