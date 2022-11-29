@@ -34,7 +34,7 @@ def contact_request():
 	(first_name, last_name, email, number, comment))
 	conn.commit()
 	conn.close()
-	return 'true'
+	return 'Thanks for contacting us we will get back to you soon'
 
 @app.route('/register/school')
 def create_school():
