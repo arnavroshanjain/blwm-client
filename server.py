@@ -28,7 +28,7 @@ def contact_request():
 		email = request.form['email']
 		number = request.form['number']
 		comment = request.form['comment']
-  
+
 	conn = get_db_connection()
 	conn.execute('INSERT INTO tbl_contact (first_name, last_name, email, number, comment) VALUES (?, ?, ?, ?, ?)',
 	(first_name, last_name, email, number, comment))
@@ -42,7 +42,7 @@ def create_school():
 
 @app.route('/register/school_request', methods=['POST', 'GET'])
 def create_school_request():
-    if request.method == 'POST': 
+    if request.method == 'POST':
         name = request.form['name']
         address = request.form['address']
         email = request.form['email']
@@ -105,6 +105,10 @@ def login_request():
 def logout():
     session.pop('userID', default=None)
     return redirect(url_for('home'))
+
+@app.route('/viewTeachers')
+def viewTeachers():
+    return render_template('viewTeachers.html')
 
 if __name__ == "__main__":
 	app.run(debug=True)
