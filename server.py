@@ -103,8 +103,8 @@ def login_request():
 
 @app.route('/logout')
 def logout():
-    session.pop('userID', default=None)
-    return redirect(url_for('home'))
+    session.pop('login', default=None)
+    return redirect(url_for('homepage'))
 
 @app.route('/viewTeachers')
 def viewTeachers():
