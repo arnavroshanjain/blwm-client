@@ -99,12 +99,12 @@ def login_request():
             print(f"the email is:{email}")
             print(f"the pass is:{password}")
             return 'True'
-    return 'email or password incorect please try again'
+    return 'email or password incorrect please try again'
 
 @app.route('/logout')
 def logout():
     session.pop('login', default=None)
-    return redirect(url_for('home'))
+    return redirect(url_for('homepage'))
 
 if __name__ == "__main__":
 	app.run(debug=True)
