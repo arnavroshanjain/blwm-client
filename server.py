@@ -37,7 +37,6 @@ def contact_request():
 	return 'true'
 	
 
-    return render_template('homepage.html')
 
 
 @app.route('/login', methods=["POST","GET"])
