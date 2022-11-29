@@ -35,9 +35,48 @@ def contact_request():
 	conn.commit()
 	conn.close()
 	return 'true'
-	
+
+@app.route('/register/school')
+def create_school():
+    return render_template('create_school.html')
+
+@app.route('/register/school_request', methods=['POST', 'GET'])
+def create_school_request():
+    if request.method == 'POST': 
+        name = request.form['name']
+        address = request.form['address']
+        email = request.form['email']
+        phone_number = request.form['phone_number']
+        # logo = request.files['logo']
+        website = request.form['website']
+        conn = get_db_connection()
+        conn.execute('INSERT INTO tbl_schools (school_name, school_address, school_logo, school_email, school_phone_number, school_website,creator_user_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        (name, address, 'logo', email, phone_number, website, session['login']))
+        conn.commit()
+        conn.close()
+        return 'True'
+    return 'Failed to create school, please try again.'
+
+@app.route('/signUp')
+def signUp():
+    return render_template('signUp.html')
+
+@app.route('/register_request', methods=['POST','GET'])
+def registerRequest():
+
+    if request.method == 'POST':
+        name = request.form['name']
+        lastName = request.form['lastName']
+        email = request.form['email']
+        password = request.form['password']
 
 
+    conn = get_db_connection()
+    conn.execute('INSERT INTO tbl_users (first_name, last_name, email, password,supply_teacher) VALUES (?, ?, ?, ?,0)',
+    (name, lastName, email, password))
+    conn.commit()
+    conn.close()
+    return 'true'
 
 @app.route('/login', methods=["POST","GET"])
 def loginPage():
@@ -62,14 +101,10 @@ def login_request():
             return 'True'
     return 'email or password incorect please try again'
 
-
 @app.route('/logout')
 def logout():
     session.pop('userID', default=None)
     return redirect(url_for('home'))
-
-
-
 
 if __name__ == "__main__":
 	app.run(debug=True)

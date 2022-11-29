@@ -4,7 +4,16 @@
     --accent: #3C6997;
 }
 
-body {
+.btn-color{
+  background-color: #EEC383!important;
+}
+
+.btn-color:hover{
+  background-color: #d6af75
+}
+
+body{
+    background-color: #FFFFEA!important;
     font-family: 'Raleway', sans-serif !important;
 }
 
@@ -33,4 +42,8 @@ body {
     /* End of copied code */
     background-color: rgba(255, 255, 255, 0.941);
     background-blend-mode: multiply;
+}
+
+.title {
+    color: #FF4A47;
 }
