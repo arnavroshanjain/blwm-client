@@ -47,3 +47,7 @@ body{
 .title {
     color: #FF4A47;
 }
+
+.grid-container {
+  display: grid;
+}
