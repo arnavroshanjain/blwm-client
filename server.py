@@ -103,7 +103,7 @@ def login_request():
 
 @app.route('/logout')
 def logout():
-    session.pop('userID', default=None)
+    session.pop('login', default=None)
     return redirect(url_for('home'))
 
 if __name__ == "__main__":

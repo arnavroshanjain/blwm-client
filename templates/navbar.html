@@ -12,8 +12,12 @@
           </li>
         </ul>
         <form class="container-fluid justify-content-start" align="right">
+          {% if session.get('userID') %}
+          <a href="{{url_for('loginPage')}}"><button class="btn btn-sm btn-outline-secondary" type="button">Logout</button></a>
+          {% else %}
           <a href="{{url_for('loginPage')}}"><button class="btn btn-sm btn-outline-secondary" type="button">Login</button></a>
           <a href="{{url_for('signUp')}}"><button class="btn btn-sm btn-outline-secondary" type="button">Signup</button></a>
+          {% endif %}
         </form>
       </div>
     </div>
