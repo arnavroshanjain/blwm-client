@@ -1,15 +1,30 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 import sqlite3
 from werkzeug.utils import secure_filename
-import os 
-import datetime
-
-UPLOAD_FOLDER = 'static/uploads'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = 'SuperSecretKey'
+
+def check_login():
+
+	try:	
+		user_id = session['login']
+	except KeyError:
+		return False, None
+
+	conn = get_db_connection()
+	info = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {user_id}').fetchall()
+	conn.close()
+
+	for row in info:
+		if row['supply_teacher'] != None:
+			return True, 'teacher'
+		elif row['school_id'] != None:
+			return True, 'school'
+		else:
+			return True, None
+
+	return 
 
 def get_db_connection():
 	conn = sqlite3.connect('blwmDB.db')
@@ -44,6 +59,12 @@ def contact_request():
 
 @app.route('/register/school')
 def create_school():
+
+	if check_login()[0] != True:
+		return redirect(url_for('loginPage'))
+	elif check_login()[1] != None:
+		return redirect(url_for('homepage'))
+
 	return render_template('create_school.html', schoolLogo = 'none')
 
 @app.route('/register/school_request', methods=['POST', 'GET'])
@@ -82,7 +103,7 @@ def registerRequest():
 		password = request.form['password']
 
 	conn = get_db_connection()
-	conn.execute('INSERT INTO tbl_users (first_name, last_name, email, password,supply_teacher) VALUES (?, ?, ?, ?,0)',
+	conn.execute('INSERT INTO tbl_users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)',
 	(name, lastName, email, password))
 	conn.commit()
 	conn.close()
