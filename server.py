@@ -106,5 +106,19 @@ def logout():
     session.pop('login', default=None)
     return redirect(url_for('homepage'))
 
+@app.route('/register/user_select')
+def user_select():
+
+	user_id = session['login']
+
+	conn = get_db_connection()
+	name_row = conn.execute(f'SELECT first_name FROM tbl_users WHERE user_id = {user_id}')
+	conn.close()
+
+	for row in name_row:
+		name = name_row['first_name']
+
+	return render_template('user_select.html', title='User select', name=name)
+
 if __name__ == "__main__":
 	app.run(debug=True)
