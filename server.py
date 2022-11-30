@@ -1,7 +1,14 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 import sqlite3
-app = Flask(__name__)
+from werkzeug.utils import secure_filename
+import os 
+import datetime
 
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = 'SuperSecretKey'
 
 def get_db_connection():
@@ -37,7 +44,7 @@ def contact_request():
 
 @app.route('/register/school')
 def create_school():
-    return render_template('create_school.html')
+    return render_template('create_school.html', schoolLogo = 'none')
 
 @app.route('/register/school_request', methods=['POST', 'GET'])
 def create_school_request():
@@ -46,7 +53,6 @@ def create_school_request():
         address = request.form['address']
         email = request.form['email']
         phone_number = request.form['phone_number']
-        # logo = request.files['logo']
         website = request.form['website']
         conn = get_db_connection()
         conn.execute('INSERT INTO tbl_schools (school_name, school_address, school_logo, school_email, school_phone_number, school_website,creator_user_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
@@ -55,6 +61,14 @@ def create_school_request():
         conn.close()
         return 'True'
     return 'Failed to create school, please try again.'
+
+# @app.route('/upload_image', methods=['POST', 'GET'])
+# def upload_image():
+#     logo = request.files['logo']
+#     logo.filename = str(datetime.datetime.now().date()) + '_' + str(datetime.datetime.now().time()).replace(':', '.')
+#     filename = secure_filename(logo.filename)
+#     logo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+#     return render_template()
 
 @app.route('/signUp')
 def signUp():
@@ -68,7 +82,6 @@ def registerRequest():
         lastName = request.form['lastName']
         email = request.form['email']
         password = request.form['password']
-
 
     conn = get_db_connection()
     conn.execute('INSERT INTO tbl_users (first_name, last_name, email, password,supply_teacher) VALUES (?, ?, ?, ?,0)',
