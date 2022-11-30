@@ -35,12 +35,12 @@ def contact_request():
         comment = request.form['comment']
         logo = request.files['logo']
   
-    conn = get_db_connection()
-    conn.execute('INSERT INTO tbl_contact (first_name, last_name, email, number, comment) VALUES (?, ?, ?, ?, ?)',
-    (first_name, last_name, email, number, comment))
-    conn.commit()
-    conn.close()
-    return 'true'
+	conn = get_db_connection()
+	conn.execute('INSERT INTO tbl_contact (first_name, last_name, email, number, comment) VALUES (?, ?, ?, ?, ?)',
+	(first_name, last_name, email, number, comment))
+	conn.commit()
+	conn.close()
+	return 'Thanks for contacting us we will get back to you soon'
 
 @app.route('/register/school')
 def create_school():
@@ -111,12 +111,12 @@ def login_request():
             print(f"the email is:{email}")
             print(f"the pass is:{password}")
             return 'True'
-    return 'email or password incorect please try again'
+    return 'email or password incorrect please try again'
 
 @app.route('/logout')
 def logout():
-    session.pop('userID', default=None)
-    return redirect(url_for('home'))
+    session.pop('login', default=None)
+    return redirect(url_for('homepage'))
 
 if __name__ == "__main__":
     app.run(debug=True)
