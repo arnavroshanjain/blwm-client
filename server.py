@@ -106,5 +106,11 @@ def logout():
     session.pop('login', default=None)
     return redirect(url_for('homepage'))
 
+@app.route('/school_profile')
+def school_profile():
+    
+    return render_template('school_profile.html', title='School Profile', school_info = school_profile)
+
+
 if __name__ == "__main__":
 	app.run(debug=True)
