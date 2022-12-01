@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block content %} 
+{% include 'navbar.html' %}
 <!-- adapted form https://getbootstrap.com/docs/5.2/forms/overview/-->
-<div class="container center">
+<div class="container mt-5 p-5 center">
     <form class="row g-3" onsubmit="return contact()" method ='post'>
         <div>
             <label>First Name</label>
@@ -30,6 +31,6 @@
     </form>
 </div>
 <!--end of adapted code-->
-<center><p>Cardiff University, Cardiff, Wales CF10 3AT UK <br> <b>Phone:</b> +44 (0)29 2087 4000  <b>Fax:</b> +44 (0)29 2087 4000 <br> enquiry@cardiff.ac.uk</p> </center>
+<center><p>Cardiff University, Cardiff, Wales CF10 3AT UK <br> <b>Phone:</b> +44 (0)29 2087 4000  <b>Fax:</b> +44 (0)29 2087 4000 <br></p> <a href="mailto:enquiry@cardiff.ac.uk">enquiry@cardiff.ac.uk</a> </center>
 
 {% endblock %}

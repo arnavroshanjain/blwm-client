@@ -34,7 +34,7 @@ def contact_request():
 	(first_name, last_name, email, number, comment))
 	conn.commit()
 	conn.close()
-	return 'true'
+	return 'Thanks for contacting us we will get back to you soon'
 
 @app.route('/register/school')
 def create_school():
@@ -99,7 +99,7 @@ def login_request():
             print(f"the email is:{email}")
             print(f"the pass is:{password}")
             return 'True'
-    return 'email or password incorect please try again'
+    return 'email or password incorrect please try again'
 
 @app.route('/logout')
 def logout():
