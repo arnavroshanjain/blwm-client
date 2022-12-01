@@ -140,6 +140,10 @@ def login_request():
 			session['login'] = i['user_id']
 			print(f"the email is:{email}")
 			print(f"the pass is:{password}")
+
+			if check_login()[1] == None:
+				return 'register partially complete'
+
 			return 'True'
 	return 'email or password incorrect please try again'
 

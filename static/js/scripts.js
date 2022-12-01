@@ -63,8 +63,11 @@ function login_function() {
         if (response=="True"){
           window.alert("you have been logged in");
           window.location.replace('../');
+        } else if (response=="register partially complete") {
+          window.alert("you have been logged in");
+          window.location.replace('../register/user_select');
         }else{
-          window.alert(response)
+          window.alert(response);
         }
       } else {
         console.error(xhttp.statusText);
