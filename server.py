@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 import sqlite3
+from markupsafe import escape
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'SuperSecretKey'
@@ -28,7 +29,7 @@ def contact_request():
 		email = request.form['email']
 		number = request.form['number']
 		comment = request.form['comment']
-  
+
 	conn = get_db_connection()
 	conn.execute('INSERT INTO tbl_contact (first_name, last_name, email, number, comment) VALUES (?, ?, ?, ?, ?)',
 	(first_name, last_name, email, number, comment))
@@ -42,7 +43,7 @@ def create_school():
 
 @app.route('/register/school_request', methods=['POST', 'GET'])
 def create_school_request():
-    if request.method == 'POST': 
+    if request.method == 'POST':
         name = request.form['name']
         address = request.form['address']
         email = request.form['email']
@@ -105,6 +106,22 @@ def login_request():
 def logout():
     session.pop('login', default=None)
     return redirect(url_for('homepage'))
+
+@app.route('/teacherProfile')
+def teacherProfile():
+    return render_template('teacherProfile.html')
+
+
+@app.route('/user/<user_id>')
+def show_user_profile(user_id):
+    # show the user profile for that user
+	conn=get_db_connection()
+	school_info = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {escape(user_id)}').fetchall()
+	conn.close()
+	return render_template('teacherProfile.html',user_id=user_id)
+    #return f'User {escape(username)}'
+
+
 
 if __name__ == "__main__":
 	app.run(debug=True)
