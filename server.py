@@ -45,7 +45,6 @@ def contact_request():
 		email = request.form['email']
 		number = request.form['number']
 		comment = request.form['comment']
-		logo = request.files['logo']
   
 	conn = get_db_connection()
 	conn.execute('INSERT INTO tbl_contact (first_name, last_name, email, number, comment) VALUES (?, ?, ?, ?, ?)',
@@ -99,11 +98,27 @@ def registerRequest():
 		email = request.form['email']
 		password = request.form['password']
 
+	conn=get_db_connection()
+	users = conn.execute('SELECT * FROM tbl_users').fetchall()
+	conn.close()
+	for row in users:
+		if row['email'] == email:
+			return 'Email is already in use'
+
 	conn = get_db_connection()
 	conn.execute('INSERT INTO tbl_users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)',
 	(name, lastName, email, password))
 	conn.commit()
 	conn.close()
+
+	conn=get_db_connection()
+	users = conn.execute('SELECT * FROM tbl_users').fetchall()
+	conn.close()
+
+	for row in users:
+		if row['email'] == email:
+			session['login'] = row['user_id']
+
 	return 'true'
 
 @app.route('/login', methods=["POST","GET"])
@@ -112,7 +127,6 @@ def loginPage():
 
 @app.route('/login_request', methods=["POST","GET"])
 def login_request():
-	print("test")
 	if request.method == 'POST':
 		email = request.form['email']
 		password = request.form['password']
@@ -136,8 +150,6 @@ def logout():
 
 @app.route('/register/user_select')
 def user_select():
-
-	print (check_login())
 
 	if check_login()[0] != True:
 		return redirect(url_for('loginPage'))

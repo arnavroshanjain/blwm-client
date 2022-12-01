@@ -11,7 +11,8 @@ function send_register(){
     if (xhttp.readyState === 4 && xhttp.status === 200) {
       var response = xhttp.responseText;
       if (response == 'true') {
-        window.location.replace('../');
+        window.alert('Account created')
+        window.location.replace('../register/user_select');
       } else {
         window.alert(response)
       }
@@ -59,14 +60,11 @@ function login_function() {
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
         var response = xhttp.responseText;
-        window.alert(response);
         if (response=="True"){
           window.alert("you have been logged in");
           window.location.replace('../');
         }else{
-
           window.alert(response)
-
         }
       } else {
         console.error(xhttp.statusText);
