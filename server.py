@@ -4,6 +4,27 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'SuperSecretKey'
 
+# Copied from branch 13, once 13 is merged remove this function
+def check_login():
+	try:	
+		user_id = session['login']
+	except KeyError:
+		return False, None
+	conn = get_db_connection()
+	info = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {user_id}').fetchall()
+	conn.close()
+	for row in info:
+		print (row['supply_teacher'])
+		if row['supply_teacher'] != None:
+			return True, 'teacher'
+		elif row['school_id'] != None:
+			return True, 'school'
+		else:
+			return True, None
+
+	return False, None
+# End of branch 13 code
+
 def get_db_connection():
 	conn = sqlite3.connect('blwmDB.db')
 	conn.row_factory = sqlite3.Row
@@ -109,14 +130,21 @@ def logout():
 @app.route('/register/user_select')
 def user_select():
 
+	print (check_login())
+
+	if check_login()[0] != True:
+		return redirect(url_for('loginPage'))
+	elif check_login()[1] != None:
+		return redirect(url_for('homepage'))
+
 	user_id = session['login']
 
 	conn = get_db_connection()
-	name_row = conn.execute(f'SELECT first_name FROM tbl_users WHERE user_id = {user_id}')
+	name_row = conn.execute(f'SELECT first_name FROM tbl_users WHERE user_id = {user_id}').fetchall()
 	conn.close()
 
 	for row in name_row:
-		name = name_row['first_name']
+		name = row['first_name']
 
 	return render_template('user_select.html', title='User select', name=name)
 

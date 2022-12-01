@@ -1,24 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <div class="container h-full">
+    <div class="container h-full d-flex flex-column justify-content-center">
 
-        <h1 class="title" >Welcome, {{name}}</h1>
+        <div class=".container-fluid d-flex flex-column algin-items-center">
+            <div class="col d-flex justify-content-center">
+                <h1 class="title" >Welcome, {{name}}</h1>
+            </div>
+            <div class="col d-flex justify-content-center">
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, itaque.</p>
+            </div>
+        </div>
+        
 
         <div class="row">
             <div class="col d-flex justify-content-center">
                 <a href="" class="btn btn-color">
-                    Register school
+                    Register school <i class="bi bi-arrow-right ps-1"></i>
                 </a>
             </div>
             <div class="col d-flex justify-content-center">
                 <a href="" class="btn btn-color">
-                    I'm a supply teacher
+                    I'm a supply teacher <i class="bi bi-arrow-right ps-1"></i>
                 </a>        
             </div>
             <div class="col d-flex justify-content-center">
                 <a href="" class="btn btn-color">
-                    Enter school code
+                    Enter school code <i class="bi bi-arrow-right ps-1"></i>
                 </a>
             </div>
         </div>
