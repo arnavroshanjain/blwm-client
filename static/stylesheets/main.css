@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 
 .btn-color{
-  background-color: #EEC383!important;
+    background-color: #EEC383 !important;
+}
+
+.bg-color {
+    background-color: #EEC383 !important;
 }
 
 .btn-color:hover{

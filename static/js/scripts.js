@@ -120,3 +120,16 @@ function create_school_request() {
   xhttp.send(params);
   return false;
 }
+
+function select_subject(subject_id, subject_name) {
+  subjects = document.getElementById('teacher_subjects').innerHTML
+  if (subjects.split(' ').includes(subject_id)) {
+    return
+  }
+  document.getElementById('selected_subjects').innerHTML += '<!--'+subject_id+'--><div class="col-3 bg-color rounded-pill m-1 p-1 ps-2 pe-2">'+subject_name+'<a class="float-end text-dark" onclick="remove_subject('+subject_id+',\''+subject_name+'\')"><i class="bi bi-x-circle"></i></a></div><!--'+subject_id+'end-->';
+  document.getElementById('teacher_subjects').innerHTML +=  subject_id + ' ';
+}
+
+function remove_subject(subject_id, subject_name) {
+  window.alert(subject_name)
+}

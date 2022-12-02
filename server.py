@@ -85,6 +85,22 @@ def create_school_request():
 		return 'True'
 	return 'Failed to create school, please try again.'
 
+@app.route('/register/teacher')
+def register_teacher():
+
+	conn = get_db_connection()
+	subjects = conn.execute('SELECT * FROM tbl_subjects').fetchall()
+	conn.close()
+
+	return render_template('register_teacher.html', subjects=subjects)
+
+@app.route('/register/teacher_request', methods=['POST', 'GET'])
+def register_teacher_request():
+
+
+
+	return 'end'
+
 @app.route('/signUp')
 def signUp():
 	return render_template('signUp.html')

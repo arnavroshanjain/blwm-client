@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+
+        <form onsubmit="return" method="post">
+            <div class="row mb-3">
+                <div class="col-4 d-flex flex-column align-items-center justify-content-center">
+                    <label class="mb-1">School logo</label>
+                    
+                    <!-- Adapted from https://stackoverflow.com/questions/16001586/change-the-no-file-chosen -->
+                    <label id="pfp-select-label" for="pfp-select" class="btn btn-secondary pfp-select rounded-circle pfp-bg-img d-flex align-items-center justify-content-center">
+                        <i class="bi bi-pencil-fill"></i>
+                    </label>
+                    <input type="file" accept="image/jpeg, image/png" id="pfp-select" style="display: none;" onchange="update_logo()" value="none">
+                    <!-- End of adapted code -->
+                </div>
+                <div class="col-8 d-flex align-items-center">
+                    <h2>Fname, Lname</h2>
+                </div>
+            </div>
+
+            
+            <div class="row mb-3">
+                <div class="container-fluid border rounded p-1 mb-3">
+                    <div id="selected_subjects" class="row d-flex justify-content-center">
+
+                        <!-- <div class="col-3 bg-color rounded-pill m-1 p-1 ps-2 pe-2"> Subject name <a class="float-end text-dark" onclick="remove_subject()"><i class="bi bi-x-circle"></i></a></div> -->
+                        
+                        <p name="teacher_subjects" id="teacher_subjects"></p>
+
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false">
+                        Select subject
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for row in subjects %}
+                            {% set subject_id = row['subject_id'] %}
+                            {% set subject_name = row['subject_name'] %}
+                            <li><a class="dropdown-item" onclick="select_subject('{{ subject_id }}', '{{subject_name}}')">{{ subject_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            
+
+        </form>
+
+    </div>
+
+{% endblock %}
