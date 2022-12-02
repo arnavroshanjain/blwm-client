@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 import sqlite3
 from werkzeug.utils import secure_filename
+from markupsafe import escape
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'SuperSecretKey'
@@ -135,10 +136,12 @@ def logout():
 	session.pop('login', default=None)
 	return redirect(url_for('homepage'))
 
-@app.route('/school_profile')
-def school_profile():
-    
-    return render_template('school_profile.html', title='School Profile', school_info = school_profile)
+@app.route('/school_profile/<school_id>')
+def school_profile(school_id):
+	conn=get_db_connection()
+	school_info = conn.execute(f'SELECT * FROM tbl_schools WHERE school_id = {escape(school_id)}').fetchall()
+	conn.close()
+	return render_template('school_profile.html', title='School Profile', school_profile = school_info)
 
 
 if __name__ == "__main__":
