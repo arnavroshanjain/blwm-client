@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'navbar.html' %}
-<div class="mt-5 p-5">
-  <h1>Hello, {{username}}: Here are you details:</h1>
-  {% for row in teacherProfile%}
-  <p>{{row['first_name']}}
-  {%endfor%}
+<div class="mt-5 p-4">
 
+
+    {% for row in user_info %}
+      <h2>First Name: {{row['first_name']}}</h2>
+      <p> Last Name: {{row['last_name']}}</p>
+     {% endfor %}
 </div>
-
-
 {% endblock %}

@@ -114,14 +114,12 @@ def teacherProfile():
 
 @app.route('/user/<user_id>')
 def show_user_profile(user_id):
-    # show the user profile for that user
+
 	conn=get_db_connection()
-	school_info = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {escape(user_id)}').fetchall()
+	sql_request = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {escape(user_id)}').fetchall()
 	conn.close()
-	return render_template('teacherProfile.html',user_id=user_id)
-    #return f'User {escape(username)}'
 
-
+	return render_template('teacherProfile.html',user_info = sql_request)
 
 if __name__ == "__main__":
 	app.run(debug=True)
