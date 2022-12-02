@@ -131,5 +131,12 @@ function select_subject(subject_id, subject_name) {
 }
 
 function remove_subject(subject_id, subject_name) {
-  window.alert(subject_name)
+  selected_subjects = document.getElementById('selected_subjects').innerHTML
+  // startpoint = selected_subjects.search('<!--'+subject_id+'-->')
+  // endpoint = selected_subjects.search('<!--'+subject_id+'end-->')
+  // id_length = subject_id.length;
+  // endpoint = endpoint + (String(subject_id).length) + 9
+  // first_part = selected_subjects.substring(0,startpoint)
+  // second_part = selected_subjects.substring(endpoint)
+  document.getElementById('selected_subjects').innerHTML  = selected_subjects.replace('data-','');
 }
