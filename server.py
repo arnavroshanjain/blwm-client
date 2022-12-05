@@ -7,23 +7,22 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'SuperSecretKey'
 
 def check_login():
-
 	try:	
 		user_id = session['login']
 	except KeyError:
 		return False, None
-
 	conn = get_db_connection()
 	info = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {user_id}').fetchall()
 	conn.close()
-
 	for row in info:
+		print (row['supply_teacher'])
 		if row['supply_teacher'] != None:
 			return True, 'teacher'
 		elif row['school_id'] != None:
 			return True, 'school'
 		else:
 			return True, None
+	return False, None
 
 def get_db_connection():
 	conn = sqlite3.connect('blwmDB.db')
@@ -47,7 +46,6 @@ def contact_request():
 		email = request.form['email']
 		number = request.form['number']
 		comment = request.form['comment']
-		logo = request.files['logo']
   
 	conn = get_db_connection()
 	conn.execute('INSERT INTO tbl_contact (first_name, last_name, email, number, comment) VALUES (?, ?, ?, ?, ?)',
@@ -101,11 +99,27 @@ def registerRequest():
 		email = request.form['email']
 		password = request.form['password']
 
+	conn=get_db_connection()
+	users = conn.execute('SELECT * FROM tbl_users').fetchall()
+	conn.close()
+	for row in users:
+		if row['email'] == email:
+			return 'Email is already in use'
+
 	conn = get_db_connection()
 	conn.execute('INSERT INTO tbl_users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)',
 	(name, lastName, email, password))
 	conn.commit()
 	conn.close()
+
+	conn=get_db_connection()
+	users = conn.execute('SELECT * FROM tbl_users').fetchall()
+	conn.close()
+
+	for row in users:
+		if row['email'] == email:
+			session['login'] = row['user_id']
+
 	return 'true'
 
 @app.route('/login', methods=["POST","GET"])
@@ -114,7 +128,6 @@ def loginPage():
 
 @app.route('/login_request', methods=["POST","GET"])
 def login_request():
-	print("test")
 	if request.method == 'POST':
 		email = request.form['email']
 		password = request.form['password']
@@ -128,6 +141,10 @@ def login_request():
 			session['login'] = i['user_id']
 			print(f"the email is:{email}")
 			print(f"the pass is:{password}")
+
+			if check_login()[1] == None:
+				return 'register partially complete'
+
 			return 'True'
 	return 'email or password incorrect please try again'
 
@@ -143,6 +160,25 @@ def school_profile(school_id):
 	conn.close()
 	return render_template('school_profile.html', title='School Profile', school_profile = school_info)
 
+
+@app.route('/register/user_select')
+def user_select():
+
+	if check_login()[0] != True:
+		return redirect(url_for('loginPage'))
+	elif check_login()[1] != None:
+		return redirect(url_for('homepage'))
+
+	user_id = session['login']
+
+	conn = get_db_connection()
+	name_row = conn.execute(f'SELECT first_name FROM tbl_users WHERE user_id = {user_id}').fetchall()
+	conn.close()
+
+	for row in name_row:
+		name = row['first_name']
+
+	return render_template('user_select.html', title='User select', name=name)
 
 if __name__ == "__main__":
 	app.run(debug=True)
