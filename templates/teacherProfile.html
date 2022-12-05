@@ -2,11 +2,20 @@
 {% block content %}
 {% include 'navbar.html' %}
 <div class="mt-5 p-4">
+<h1 align=center> <u> Teacher Profile Page <i class="bi bi-person"> </i> </u> </h1>
+
 
 
     {% for row in user_info %}
-      <h2>First Name: {{row['first_name']}}</h2>
-      <p> Last Name: {{row['last_name']}}</p>
+      <h2 align=center> Welcome, {{row['first_name']}}
+      <h3> Your Details: </h3>
+      <div class="col bg-white">
+        <div class="border border-dark">
+          <p><b>First Name: </b>{{row['first_name']}}</p>
+          <p> <b>Last Name: </b>{{row['last_name']}}</p>
+          <p> <b>Registered Email: </b>{{row['email']}}</p>
+        </div>
+      <div>
      {% endfor %}
 </div>
 {% endblock %}
