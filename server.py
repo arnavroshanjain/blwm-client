@@ -121,5 +121,22 @@ def show_user_profile(user_id):
 
 	return render_template('teacherProfile.html',user_info = sql_request)
 
+@app.route('/user/<user_id>', methods=['POST','GET'])
+def update_profile():
+
+    if request.method == 'POST':
+        firstName = request.form['inputFname']
+        lastName = request.form['inputLName']
+        email = request.form['inputEmail']
+
+
+
+    conn = get_db_connection()
+    conn.execute(f'UPDATE tbl_users SET column1 = ?, column2 = ? WHERE user_id={session["login"]};', (name, lastName, email))
+    conn.commit()
+    conn.close()
+    return 'true'
+
+
 if __name__ == "__main__":
 	app.run(debug=True)

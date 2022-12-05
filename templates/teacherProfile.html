@@ -18,4 +18,33 @@
       <div>
      {% endfor %}
 </div>
+
+
+
+
+<form onsubmit="return update_profile()">
+  <!-- Adapted from https://getbootstrap.com/docs/5.2/forms/overview/-->
+  {% for row in user_info %}
+  <div class="mb-3">
+    <label for="inputFName" class="form-label">First Name</label>
+    <input value= "{{row['first_name']}}" type="text" class="form-control" id="inputFName" name="inputFName">
+  </div>
+  <div class="mb-3">
+    <label for="inputLName" class="form-label">Last Name</label>
+    <input value="{{row['last_name']}}" type="text" class="form-control" id="inputFname" name="inputFName">
+  </div>
+  <div class="mb-3">
+    <label for="inputEmail" class="form-label">Email address</label>
+    <input value="{{row['email']}}" type="email" class="form-control" id="inputEmail" name="inputEmail">
+  </div>
+  <div class="col text-center">
+    <button  type="submit" class="btn btn-warning" name="button">Update Deatils</button>
+  </div>
+  {% endfor %}
+
+<!-- end of adapted code -->
+
+</form>
+
+
 {% endblock %}
