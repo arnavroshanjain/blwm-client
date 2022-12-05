@@ -7,7 +7,7 @@
 
 
     {% for row in user_info %}
-      <h2 align=center> Welcome, {{row['first_name']}}
+      <h2 align=center> Welcome, {{row['first_name']}} {{row['last_name']}}</h2>
       <h3> Your Details: </h3>
       <div class="col bg-white">
         <div class="border border-dark">
@@ -19,8 +19,8 @@
      {% endfor %}
 </div>
 
-
-
+<h1>--------------------------------------------------------------------</h1>
+<br>
 
 <form onsubmit="return update_profile()">
   <!-- Adapted from https://getbootstrap.com/docs/5.2/forms/overview/-->

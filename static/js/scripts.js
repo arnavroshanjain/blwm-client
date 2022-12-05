@@ -103,30 +103,30 @@ function create_school_request() {
     xhttp.send(params);
     return false;
 }
-
-function update_profile(){
-  var firstName = document.getElementById('inputFName').value;
-  var lastName = document.getElementById('inputLName').value;
-  var email = document.getElementById('inputEmail').value;
-  var params = 'inputFName='+firstName+'&inputLName='+lastName+ '&inputEmail='+email;
-  var xhttp = new XMLHttpRequest();
-  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhttp.onreadystatechange = function() {
-      if (xhttp.readyState === 4 && xhttp.status === 200) {
-        var response = xhttp.responseText;
-        window.alert(response);
-        if (response=="True"){
-          window.alert("Information has been Updated");
-          window.location.replace('/user');
-        }else{
-
-          window.alert(response)
-
-        }
-      } else {
-        console.error(xhttp.statusText);
-      }
-    };
-  xhttp.send(params);
-  return false;
-}
+//
+// function update_profile(){
+//   var firstName = document.getElementById('inputFName').value;
+//   var lastName = document.getElementById('inputLName').value;
+//   var email = document.getElementById('inputEmail').value;
+//   var params = 'inputFName='+firstName+'&inputLName='+lastName+ '&inputEmail='+email;
+//   var xhttp = new XMLHttpRequest();
+//   xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+//     xhttp.onreadystatechange = function() {
+//       if (xhttp.readyState === 4 && xhttp.status === 200) {
+//         var response = xhttp.responseText;
+//         window.alert(response);
+//         if (response=="True"){
+//           window.alert("Information has been Updated");
+//           window.location.replace('/user');
+//         }else{
+//
+//           window.alert(response)
+//
+//         }
+//       } else {
+//         console.error(xhttp.statusText);
+//       }
+//     };
+//   xhttp.send(params);
+//   return false;
+// }
