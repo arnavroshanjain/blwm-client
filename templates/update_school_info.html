@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %} 
+<div class="container mt-5 p-5 center">
+    {% for row in school_profile  %}
+    <form class="row g-3" onsubmit="return contact()" method ='post'>
+        <div>
+            <label>School Name</label>
+            <input class="form-control" type="text" id="school_name" value="{{ row['school_name'] }}" required>
+        </div>
+        <div>
+            <label>Address</label>
+            <input class="form-control" type="text" id="school_address" value="{{ row['school_address'] }}" required>
+        </div>
+        <div>
+            <label>logo</label>
+            <input class="form-control" type="text" id="school_logo" value="{{ row['school_logo'] }}" required>
+        </div>
+        <div>
+            <label>Email</label>
+            <input class="form-control" type="email" id="school_email" value="{{ row['school_email'] }}" required>  
+        </div>
+        <div>
+            <label>Number</label>
+            <input class="form-control" type="number" id="school_phone_number" value="{{ row['school_phone_number'] }}" required>
+        </div>
+        <div>
+            <label>Website</label>
+            <input class="form-control" value="{{ row['school_website'] }}" id="school_website" required></input>
+        </div>
+
+        <div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form>
+    {% endfor %}
+</div>
+{% endblock %}

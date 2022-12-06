@@ -120,3 +120,30 @@ function create_school_request() {
   xhttp.send(params);
   return false;
 }
+
+function update() {
+  var school_name = document.getElementById('school_name').value;
+  var school_address = document.getElementById('school_address').value;
+  var school_logo = document.getElementById('school_logo').value;
+  var school_email = document.getElementById('school_email').value;
+  var school_phone_number = document.getElementById('school_phone_number').value;
+  var school_website = document.getElementById('school_website').value
+  var params = 'school_name='+school_name+'&school_address='+school_address+'&school_logo='+school_logo+'&school_email='+school_email+'&school_phone_number='+school_phone_number+'&school_website'+school_website;    
+  var xhttp = new XMLHttpRequest();
+  xhttp.open('POST', 'school_request', true);
+  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        var response = xhttp.responseText;
+        if (response == 'True') {
+          window.location.replace('../');
+        } else {
+          window.alert(response);
+        }
+      } else {
+        console.error(xhttp.statusText);
+      }
+    };
+  xhttp.send(params);
+  return false;
+}
