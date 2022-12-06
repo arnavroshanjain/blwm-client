@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 import sqlite3
+from datetime import date 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'SuperSecretKey'
@@ -35,15 +36,10 @@ def contact_request():
 	conn.commit()
 	conn.close()
 	return 'true'
-	
-
-    return render_template('homepage.html')
 
 @app.route('/signUp')
 def signUp():
     return render_template('signUp.html')
-
-
 
 
 @app.route('/register_request', methods=['POST','GET'])
@@ -91,6 +87,20 @@ def login_request():
 def logout():
     session.pop('userID', default=None)
     return redirect(url_for('home'))
+
+
+@app.route('/listing')
+def listed():
+    today = date.today()
+    return render_template('jobListing.html', today=today)
+
+@app.route('/subjectRequest')
+def subjectDisplay():
+    conn = get_db_connection()
+    subs = conn.execute("SELECT * FROM subject_name WHERE user_id = session['login']").fetchall()
+    conn.close()
+
+
 
 if __name__ == "__main__":
 	app.run(debug=True)
