@@ -23,7 +23,7 @@
 <h1>--------------------------------------------------------------------</h1>
 <br>
 
-<form onsubmit="return update_profile()">
+<form method="post" onsubmit="return update_profile()">
   <!-- Adapted from https://getbootstrap.com/docs/5.2/forms/overview/-->
   {% for row in user_info %}
   <div class="mb-3">
@@ -32,7 +32,7 @@
   </div>
   <div class="mb-3">
     <label for="inputLName" class="form-label">Last Name</label>
-    <input value="{{row['last_name']}}" type="text" class="form-control" id="inputFname" name="inputFName">
+    <input value="{{row['last_name']}}" type="text" class="form-control" id="inputLname" name="inputLName">
   </div>
   <div class="mb-3">
     <label for="inputEmail" class="form-label">Email address</label>
@@ -41,6 +41,7 @@
   <div class="col text-center">
     <button  type="submit" class="btn btn-warning" name="button">Update Deatils</button>
   </div>
+  <input type="hidden" id="user_id" name="userId" value="{{row['user_id']}}">
   {% endfor %}
 
 <!-- end of adapted code -->

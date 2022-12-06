@@ -195,17 +195,17 @@ def show_user_profile(user_id):
 	return render_template('teacherProfile.html',user_info = sql_request)
 
 @app.route('/user/<user_id>', methods=['POST','GET'])
-def update_profile():
+def update_profile(user_id):
 
     if request.method == 'POST':
-        firstName = request.form['inputFname']
+        firstName = request.form['inputFName']
         lastName = request.form['inputLName']
         email = request.form['inputEmail']
 
 
 
     conn = get_db_connection()
-    conn.execute(f'UPDATE tbl_users SET column1 = ?, column2 = ? WHERE user_id={session["login"]};', (name, lastName, email))
+    conn.execute(f'UPDATE tbl_users SET first_name = ?, last_name = ?, email = ? WHERE user_id={session["login"]};', (firstName, lastName, email))
     conn.commit()
     conn.close()
     return 'true'
