@@ -11,7 +11,8 @@ function send_register(){
     if (xhttp.readyState === 4 && xhttp.status === 200) {
       var response = xhttp.responseText;
       if (response == 'true') {
-        window.location.replace('../');
+        window.alert('Account created')
+        window.location.replace('../register/user_select');
       } else {
         window.alert(response)
       }
@@ -59,14 +60,14 @@ function login_function() {
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
         var response = xhttp.responseText;
-        window.alert(response);
         if (response=="True"){
           window.alert("you have been logged in");
           window.location.replace('../');
+        } else if (response=="register partially complete") {
+          window.alert("you have been logged in");
+          window.location.replace('../register/user_select');
         }else{
-
-          window.alert(response)
-
+          window.alert(response);
         }
       } else {
         console.error(xhttp.statusText);
@@ -76,7 +77,25 @@ function login_function() {
   return false;
 }
 
+function update_logo() {
+  var photo = document.getElementById('pfp-select').files[0];
+  if (photo['type'].split('/')[0] !== 'image') {
+    window.alert('Invalid file type, please select an image')
+    return 'Invalid file type'
+  }
+  const reader = new FileReader();
+  reader.addEventListener("load", () => {
+    
+    document.getElementById('pfp-select-label').classList.remove("btn-secondary");
+    document.getElementById('pfp-select-label').classList.add("pfp-select-label");
+    document.getElementById('pfp-select-label').innerHTML = '';
+    document.getElementById('pfp-select-label').style.backgroundImage = `url(${reader.result})`;
+  });
+  photo_url = reader.readAsDataURL(photo);
+}
+
 function create_school_request() {
+<<<<<<< HEAD
     var name = document.getElementById('school_name').value;
     var address = document.getElementById('school_address').value;
     var email = document.getElementById('school_email').value;
@@ -96,9 +115,27 @@ function create_school_request() {
           } else {
             window.alert(response);
           }
+=======
+  var name = document.getElementById('school_name').value;
+  var address = document.getElementById('school_address').value;
+  var email = document.getElementById('school_email').value;
+  var phone_number = document.getElementById('school_phone_number').value;
+  var website = document.getElementById('school_website').value;
+  var params = 'name='+name+'&address='+address+'&email='+email+'&phone_number='+phone_number+'&website='+website;    
+  var xhttp = new XMLHttpRequest();
+  xhttp.open('POST', 'school_request', true);
+  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        var response = xhttp.responseText;
+        if (response == 'True') {
+          window.alert('School creation successful')
+          window.location.replace('../');
+>>>>>>> 90f6c8f01ed5fbcb68d182732b2fe92530e3a07c
         } else {
-          console.error(xhttp.statusText);
+          window.alert(response);
         }
+<<<<<<< HEAD
       };
     xhttp.send(params);
     return false;
@@ -130,3 +167,12 @@ function create_school_request() {
 //   xhttp.send(params);
 //   return false;
 // }
+=======
+      } else {
+        console.error(xhttp.statusText);
+      }
+    };
+  xhttp.send(params);
+  return false;
+}
+>>>>>>> 90f6c8f01ed5fbcb68d182732b2fe92530e3a07c
