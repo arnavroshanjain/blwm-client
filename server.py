@@ -197,6 +197,7 @@ def update():
 	(school_name, school_address, school_logo, school_email, school_phone_number, school_website, school_id))
 	conn.commit()
 	conn.close()
+	return "True"
 	
 
 if __name__ == "__main__":

@@ -138,7 +138,7 @@ function update() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
         var response = xhttp.responseText;
         if (response == 'True') {
-          window.location.replace('../');
+          window.location.reload(true);
         } else {
           window.alert(response);
         }
@@ -147,5 +147,5 @@ function update() {
       }
     };
   xhttp.send(params);
-  return window.location.reload(true), false;
+  return false;
 }
