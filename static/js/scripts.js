@@ -31,7 +31,6 @@ function contact() {
     var number = document.getElementById('number').value;
     var comment = document.getElementById('comment').value;
     var params = 'first_name='+first_name+'&last_name='+last_name+'&email='+email+'&number='+number+'&comment='+comment;
-    
     var xhttp = new XMLHttpRequest();
     xhttp.open('POST', 'contact_request', true);
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -122,59 +121,39 @@ function create_school_request() {
   return false;
 }
 
-<<<<<<< HEAD
 
 function update_profile(){
   var firstName = document.getElementById('inputFName').value;
   var lastName = document.getElementById('inputLName').value;
+  var userId = document.getElementById('userID').value;
   // var userId = document.getElementById('userID').value;
   var email = document.getElementById('inputEmail').value;
+  console.log(firstName, lastName, userId, email);
+  var params = 'inputFName='+firstName+'&inputLName='+lastName+'&inputEmail='+email+'&userId='+userId;
   console.log(firstName, lastName, email);
   var params = 'inputFName='+firstName+'&inputLName='+lastName+'&inputEmail='+email;
   var xhttp = new XMLHttpRequest();
   xhttp.open('POST', 'update', true);
-=======
-function update() {
-  var school_name = document.getElementById('school_name').value;
-  var school_address = document.getElementById('school_address').value;
-  var school_logo = document.getElementById('school_logo').value;
-  var school_email = document.getElementById('school_email').value;
-  var school_phone_number = document.getElementById('school_phone_number').value;
-  var school_website = document.getElementById('school_website').value;
-  var school_id = document.getElementById('school_id').value;
-  var params = 'school_name='+school_name+'&school_address='+school_address+'&school_logo='+school_logo+'&school_email='+school_email+'&school_phone_number='+school_phone_number+'&school_website='+school_website+'&school_id='+school_id;    
-  var xhttp = new XMLHttpRequest();
-  xhttp.open('POST', 'update_school_info', true);
->>>>>>> cef168c23083a04898138a402c0e86a320f56a48
   xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
         var response = xhttp.responseText;
-<<<<<<< HEAD
+        window.alert(response);
+        if (response=="True"){
         if (response=="true"){
           window.alert("Information has been Updated");
+          window.location.replace('/user');
           var userId = document.getElementById('user_id').value;
           window.location.replace('/user/'+userId);
         }else{
+
           window.alert(response)
+
         }
       }else {
-=======
-        if (response == 'True') {
-          window.location.replace('../');
-        } else {
-          window.alert(response);
-        }
-      } else {
->>>>>>> cef168c23083a04898138a402c0e86a320f56a48
         console.error(xhttp.statusText);
       }
     };
   xhttp.send(params);
-<<<<<<< HEAD
   return false;
 }
-=======
-  return window.location.reload(true), false;
-}
->>>>>>> cef168c23083a04898138a402c0e86a320f56a48

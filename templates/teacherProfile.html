@@ -1,14 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'navbar.html' %}
-
 <div class="mt-5 p-4">
 <h1 align=center> Teacher's Profile Page <i class="bi bi-person-circle"> </i> </h1>
 <br>
 
-
-
-    <!-- {% for row in user_info %}
+    {% for row in user_info %}
       <h2 align=center> Welcome, {{row['first_name']}} {{row['last_name']}}</h2>
       <h3> Your Details: </h3>
       <div class="col bg-white">
@@ -22,7 +19,7 @@
 </div>
 
 <h1>--------------------------------------------------------------------</h1>
-<br> -->
+<br>
 
 <form method="post" onsubmit="return update_profile()">
   <!-- Adapted from https://getbootstrap.com/docs/5.2/forms/overview/-->
