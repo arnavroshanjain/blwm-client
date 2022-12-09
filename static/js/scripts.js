@@ -31,6 +31,7 @@ function contact() {
     var number = document.getElementById('number').value;
     var comment = document.getElementById('comment').value;
     var params = 'first_name='+first_name+'&last_name='+last_name+'&email='+email+'&number='+number+'&comment='+comment;
+    
     var xhttp = new XMLHttpRequest();
     xhttp.open('POST', 'contact_request', true);
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -147,4 +148,32 @@ function createJobListing() {
     };
   xhttp.send(params);
   return false;
+}
+
+function update() {
+  var school_name = document.getElementById('school_name').value;
+  var school_address = document.getElementById('school_address').value;
+  var school_logo = document.getElementById('school_logo').value;
+  var school_email = document.getElementById('school_email').value;
+  var school_phone_number = document.getElementById('school_phone_number').value;
+  var school_website = document.getElementById('school_website').value;
+  var school_id = document.getElementById('school_id').value;
+  var params = 'school_name='+school_name+'&school_address='+school_address+'&school_logo='+school_logo+'&school_email='+school_email+'&school_phone_number='+school_phone_number+'&school_website='+school_website+'&school_id='+school_id;    
+  var xhttp = new XMLHttpRequest();
+  xhttp.open('POST', 'update_school_info', true);
+  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        var response = xhttp.responseText;
+        if (response == 'True') {
+          window.location.replace('../');
+        } else {
+          window.alert(response);
+        }
+      } else {
+        console.error(xhttp.statusText);
+      }
+    };
+  xhttp.send(params);
+  return window.location.reload(true), false;
 }
