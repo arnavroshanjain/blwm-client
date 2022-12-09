@@ -192,12 +192,16 @@ def update():
 		school_phone_number = request.form['school_phone_number']
 		school_website = request.form['school_website']
 		school_id = request.form['school_id']
-	conn = get_db_connection()
-	conn.execute(f'UPDATE tbl_schools SET school_name = ?, school_address = ?, school_logo = ?, school_email = ?, school_phone_number = ?, school_website = ? WHERE school_id = ?',
-	(school_name, school_address, school_logo, school_email, school_phone_number, school_website, school_id))
-	conn.commit()
-	conn.close()
-	
+	try:
+		conn = get_db_connection()
+		conn.execute(f'UPDATE tbl_schools SET school_name = ?, school_address = ?, school_logo = ?, school_email = ?, school_phone_number = ?, school_website = ? WHERE school_id = ?',
+		(school_name, school_address, school_logo, school_email, school_phone_number, school_website, school_id))
+		conn.commit()
+		conn.close()
+		return "True"
+	except: 
+		return "False"
+		
 
 if __name__ == "__main__":
 	app.run(debug=True)
