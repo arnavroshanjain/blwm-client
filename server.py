@@ -182,33 +182,45 @@ def user_select():
 
 @app.route('/teacherProfile')
 def teacherProfile():
-    return render_template('teacherProfile.html')
+	return render_template('teacherProfile.html')
 
 
-@app.route('/user/<user_id>')
+@app.route('/user/<user_id>',methods=['POST','GET'])
+
 def show_user_profile(user_id):
+	if check_login()[0] != True:
+		return redirect(url_for('loginPage'))
+	print (str(user_id) != str(session['login'])) # true
+	if str(user_id) != str(session['login']):
+		return redirect(url_for('homepage'))
+
+	print('OUTPUT:',user_id)
 
 	conn=get_db_connection()
-	sql_request = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {escape(user_id)}').fetchall()
+	id=escape(user_id)
+	sql_request = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {id}').fetchall()
 	conn.close()
 
 	return render_template('teacherProfile.html',user_info = sql_request)
 
-@app.route('/user/<user_id>', methods=['POST','GET'])
-def update_profile(user_id):
 
-    if request.method == 'POST':
-        firstName = request.form['inputFName']
-        lastName = request.form['inputLName']
-        email = request.form['inputEmail']
+@app.route('/user/update', methods=['POST','GET'])
+def update_profile():
 
+	if request.method == 'POST':
+		firstName = request.form['inputFName']
+		lastName = request.form['inputLName']
+		email = request.form['inputEmail']
+		user_id = session["login"]
 
+	print (firstName, lastName, email, user_id)
 
-    conn = get_db_connection()
-    conn.execute(f'UPDATE tbl_users SET first_name = ?, last_name = ?, email = ? WHERE user_id={session["login"]};', (firstName, lastName, email))
-    conn.commit()
-    conn.close()
-    return 'true'
+	conn = get_db_connection()
+	conn.execute(f'UPDATE tbl_users SET first_name = ?, last_name = ?, email = ? WHERE user_id=?;', (firstName, lastName, email,user_id))
+	print(user_id)
+	conn.commit()
+	conn.close()
+	return 'true'
 
 
 if __name__ == "__main__":

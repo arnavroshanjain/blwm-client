@@ -125,23 +125,22 @@ function create_school_request() {
 function update_profile(){
   var firstName = document.getElementById('inputFName').value;
   var lastName = document.getElementById('inputLName').value;
-  var userId = document.getElementById('userID').value;
+  // var userId = document.getElementById('userID').value;
   var email = document.getElementById('inputEmail').value;
-  console.log(firstName, lastName, userId, email);
-  var params = 'inputFName='+firstName+'&inputLName='+lastName+'&inputEmail='+email+'&userId='+userId;
+  console.log(firstName, lastName, email);
+  var params = 'inputFName='+firstName+'&inputLName='+lastName+'&inputEmail='+email;
   var xhttp = new XMLHttpRequest();
+  xhttp.open('POST', 'update', true);
   xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
         var response = xhttp.responseText;
-        window.alert(response);
-        if (response=="True"){
+        if (response=="true"){
           window.alert("Information has been Updated");
-          window.location.replace('/user');
+          var userId = document.getElementById('user_id').value;
+          window.location.replace('/user/'+userId);
         }else{
-
           window.alert(response)
-
         }
       }else {
         console.error(xhttp.statusText);

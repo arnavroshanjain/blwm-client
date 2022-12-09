@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'navbar.html' %}
+
 <div class="mt-5 p-4">
 <h1 align=center> Teacher's Profile Page <i class="bi bi-person-circle"> </i> </h1>
 <br>
@@ -32,7 +33,7 @@
   </div>
   <div class="mb-3">
     <label for="inputLName" class="form-label">Last Name</label>
-    <input value="{{row['last_name']}}" type="text" class="form-control" id="inputLname" name="inputLName">
+    <input value="{{row['last_name']}}" type="text" class="form-control" id="inputLName" name="inputLName">
   </div>
   <div class="mb-3">
     <label for="inputEmail" class="form-label">Email address</label>
