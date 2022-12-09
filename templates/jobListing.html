@@ -10,27 +10,28 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form onsubmit="return send_register()" class="p-3 mb-5 bg-body rounded container">
+            <form onsubmit="return createJobListing()" class="p-3 mb-5 bg-body rounded container">
                 <div class="mb-3">
-                  <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Subject
-                    </button>
-                    <ul class="dropdown-menu">
-                      {% for row in subjects %}
-                        <li><a class="dropdown-item">{{row['subject_name']}}</a></li>
-                      {% endfor %}
-                    </ul>
-                  </div>
+                  <label class="form-label">Subject:</label>
+                  <select class="form-select" aria-label="Default select example" >
+                    <option value="" selected disabled>Please select</option>
+                    {% for row in subs %}
+                    <option id="subject" value = "{{row['subject_id']}}">{{row['subject_name']}}</option>
+                    {% endfor %}
+                  </select>
                 </div>
                 <div class="mb-3">
-                  <label for="keyStage" class="form-label">Key Stage:</label>
-                  <input type="text" class="form-control" id="keyStage">
-                  
+                  <label class="form-label">Keystage:</label>
+                  <select class="form-select" aria-label="Default select example">
+                    <option  selected disabled>Please select</option>
+                    {% for i in range (1,5) %}
+                    <option id="keystage">Keystage {{i}}</option>
+                    {% endfor %}
+                  </select>
                 </div>
                 <div class="mb-3">
                     <label for="date" class="form-label">Date:</label>
-                    <input type="Date" class="form-control" id="date" min="{{today}}">
+                    <input type="date" class="form-control" id="date" min="{{today}}">
                   </div>
                 <div class="mb-3">
                   <label for="startTime" class="form-label">Start Time:</label>
@@ -40,11 +41,12 @@
                   <label for="endTime" class="form-label">End Time:</label>
                   <input type="time" class="form-control" id="endTime">
                 </div>
-              </form>          
+                        
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Create listing</button>
         </div>
+      </form>
       </div>
     </div>
   </div>

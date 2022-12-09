@@ -185,30 +185,37 @@ def user_select():
 
 @app.route('/listing')
 def listed():
-    today = date.today()
-    return render_template('jobListing.html', today=today)
-
-@app.route('/subjectRequest')
-def subjectDisplay():
-    conn = get_db_connection()
-    subs = conn.execute("SELECT * FROM subject_name WHERE user_id = session['login']").fetchall()
-    conn.close()
+	today = date.today()
+	
+	conn = get_db_connection()
+	subs = conn.execute(f"SELECT * FROM tbl_subjects").fetchall()
+	conn.close()
 
 
 
+	return render_template('jobListing.html', today=today,subs=subs)
 
-@app.route('/listing')
-def listed():
-    today = date.today()
-    return render_template('jobListing.html', today=today)
+@app.route('/listing_request', methods=['POST','GET'])
+def listing_request():
+	if request.method == 'POST':
+		subject = request.form['subject']
+		keystage = request.form['keystage']
+		calendar = request.form['date']
+		startTime = request.form['startTime']
+		endTime = request.form['endTime']
+  
+	conn = get_db_connection()
+	school_id = conn.execute(f'SELECT school_id FROM tbl_users WHERE user_id = {session["login"]}').fetchall()
+	
+	for row in school_id:
+		current_id=row['school_id']
+		print(current_id)
+	conn.execute('INSERT INTO tbl_listings (school_id, listing_subject, listing_keystage, listing_date, listing_start_time, listing_end_time) VALUES (?,?, ?, ?, ?, ?)',
+	(current_id, subject, keystage, calendar, startTime, endTime))
+	conn.commit()
+	conn.close()
 
-@app.route('/subjectRequest')
-def subjectDisplay():
-    conn = get_db_connection()
-    subs = conn.execute("SELECT * FROM subject_name WHERE user_id = session['login']").fetchall()
-    conn.close()
-
-
+	return render_template('jobListing.html')
 
 if __name__ == "__main__":
 	app.run(debug=True)

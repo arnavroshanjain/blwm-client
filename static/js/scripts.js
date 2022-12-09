@@ -120,3 +120,31 @@ function create_school_request() {
   xhttp.send(params);
   return false;
 }
+
+
+function createJobListing() {
+  var subject = document.getElementById('subject').value;
+  var keystage = document.getElementById('keystage').value;
+  var date = document.getElementById('date').value;
+  var startTime = document.getElementById('startTime').value;
+  var endTime = document.getElementById('endTime').value;
+  var params = 'subject='+subject+'&keystage='+keystage+'&date='+date+'&startTime='+startTime+'&endTime='+endTime;    
+  var xhttp = new XMLHttpRequest();
+  xhttp.open('POST', 'listing_request', true);
+  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        var response = xhttp.responseText;
+        if (response == 'True') {
+          window.alert('Job listing successful')
+          window.location.replace('../');
+        } else {
+          window.alert(response);
+        }
+      } else {
+        console.error(xhttp.statusText);
+      }
+    };
+  xhttp.send(params);
+  return false;
+}
