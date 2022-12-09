@@ -7,7 +7,6 @@
    {% for row in school_profile  %}
    <center><h1>School Profile</h1></center>
    <center><h2>{{ row['school_name'] }} </h2></center>
-   <img src="{{ row['school_logo'] }}" class="listingImg">
       {% if session.get('login') %}
    <!-- code adapted from https://getbootstrap.com/docs/5.2/components/navs-tabs/ -->
    <nav>

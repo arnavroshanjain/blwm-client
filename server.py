@@ -172,24 +172,18 @@ def user_select():
 
 	return render_template('user_select.html', title='User select', name=name)
 
-@app.route('/school_profile/<school_id>')
+@app.route('/school_profile/<school_id>', methods=['POST','GET'])
 def school_profile(school_id):
+	print ('OUTPUT:',school_id)
 	conn=get_db_connection()
-	school_info = conn.execute(f'SELECT * FROM tbl_schools WHERE school_id = {escape(school_id)}').fetchall()
+	id = escape(school_id)
+	school_info = conn.execute(f'SELECT * FROM tbl_schools WHERE school_id = {id}').fetchall()
 	conn.close()
 	return render_template('school_profile.html', title='School Profile', school_profile = school_info)
+	
 
-@app.route('/update_school_info/<school_id>')
-def update_school_info(school_id):
-	conn=get_db_connection()
-	school_info = conn.execute(f'SELECT * FROM tbl_schools WHERE school_id = {escape(school_id)}').fetchall()
-	conn.close()
-	return render_template('update_school_info.html', school_profile = school_info)
-
-    
-
-@app.route('/update_school_info', methods=['POST','GET'] )
-def update(school_id):
+@app.route('/school_profile/update_school_info', methods=['POST','GET'] )
+def update():
 	if request.method == 'POST': 
 		school_name = request.form['school_name']
 		school_address = request.form['school_address']
@@ -197,12 +191,13 @@ def update(school_id):
 		school_email = request.form['school_email']
 		school_phone_number = request.form['school_phone_number']
 		school_website = request.form['school_website']
+		school_id = request.form['school_id']
 	conn = get_db_connection()
-	conn.execute(f'UPDATE tbl_schools school_name = ?, school_address = ?, school_logo = ?, school_email = ?, school_phone_number = ?, school_website = ? WHERE school_id = {school_id}',
-	(school_name, school_address, school_logo, school_email, school_phone_number, school_website))
+	conn.execute(f'UPDATE tbl_schools SET school_name = ?, school_address = ?, school_logo = ?, school_email = ?, school_phone_number = ?, school_website = ? WHERE school_id = ?',
+	(school_name, school_address, school_logo, school_email, school_phone_number, school_website, school_id))
 	conn.commit()
 	conn.close()
-	return 'updated successfully'
+	
 
 if __name__ == "__main__":
 	app.run(debug=True)
