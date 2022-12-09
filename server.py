@@ -153,14 +153,6 @@ def logout():
 	session.pop('login', default=None)
 	return redirect(url_for('homepage'))
 
-@app.route('/school_profile/<school_id>')
-def school_profile(school_id):
-	conn=get_db_connection()
-	school_info = conn.execute(f'SELECT * FROM tbl_schools WHERE school_id = {escape(school_id)}').fetchall()
-	conn.close()
-	return render_template('school_profile.html', title='School Profile', school_profile = school_info)
-
-
 @app.route('/register/user_select')
 def user_select():
 
@@ -179,6 +171,33 @@ def user_select():
 		name = row['first_name']
 
 	return render_template('user_select.html', title='User select', name=name)
+
+@app.route('/school_profile/<school_id>', methods=['POST','GET'])
+def school_profile(school_id):
+	print ('OUTPUT:',school_id)
+	conn=get_db_connection()
+	id = escape(school_id)
+	school_info = conn.execute(f'SELECT * FROM tbl_schools WHERE school_id = {id}').fetchall()
+	conn.close()
+	return render_template('school_profile.html', title='School Profile', school_profile = school_info)
+	
+
+@app.route('/school_profile/update_school_info', methods=['POST','GET'] )
+def update():
+	if request.method == 'POST': 
+		school_name = request.form['school_name']
+		school_address = request.form['school_address']
+		school_logo = request.form['school_logo']
+		school_email = request.form['school_email']
+		school_phone_number = request.form['school_phone_number']
+		school_website = request.form['school_website']
+		school_id = request.form['school_id']
+	conn = get_db_connection()
+	conn.execute(f'UPDATE tbl_schools SET school_name = ?, school_address = ?, school_logo = ?, school_email = ?, school_phone_number = ?, school_website = ? WHERE school_id = ?',
+	(school_name, school_address, school_logo, school_email, school_phone_number, school_website, school_id))
+	conn.commit()
+	conn.close()
+	
 
 if __name__ == "__main__":
 	app.run(debug=True)
