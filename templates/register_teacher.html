@@ -3,10 +3,14 @@
 
     <div class="container">
 
-        <form onsubmit="return" method="post">
+        <div class="d-flex justify-content-center pt-3 mb-3">
+                <h1 class="title">Supply teacher register</h1>
+        </div>
+
+        <form onsubmit="return teacher_request()" method="post">
             <div class="row mb-3">
-                <div class="col-4 d-flex flex-column align-items-center justify-content-center">
-                    <label class="mb-1">School logo</label>
+                <div class="col-6 d-flex flex-column align-items-center justify-content-center">
+                    <label class="mb-1">Profile picture</label>
                     
                     <!-- Adapted from https://stackoverflow.com/questions/16001586/change-the-no-file-chosen -->
                     <label id="pfp-select-label" for="pfp-select" class="btn btn-secondary pfp-select rounded-circle pfp-bg-img d-flex align-items-center justify-content-center">
@@ -15,36 +19,87 @@
                     <input type="file" accept="image/jpeg, image/png" id="pfp-select" style="display: none;" onchange="update_logo()" value="none">
                     <!-- End of adapted code -->
                 </div>
-                <div class="col-8 d-flex align-items-center">
-                    <h2>Fname, Lname</h2>
+                <div class="col-6 d-flex align-items-center">
+                    {% for row in user_info %}
+                        <h2>{{row['first_name']}}, {{row['last_name']}}</h2>
+                    {% endfor %}
                 </div>
             </div>
 
-            
+            <div class="border rounded mb-3 p-2">
             <div class="row mb-3">
-                <div class="container-fluid border rounded p-1 mb-3">
-                    <div id="selected_subjects" class="row d-flex justify-content-center">
-
-                        <!-- <div class="col-3 bg-color rounded-pill m-1 p-1 ps-2 pe-2"> Subject name <a class="float-end text-dark" onclick="remove_subject()"><i class="bi bi-x-circle"></i></a></div> -->
-                        
-                        <p name="teacher_subjects" id="teacher_subjects"></p>
-
+                <div class="container-fluid rounded mb-3">
+                    
+                    <div class="row">
+                        <div class="col d-flex align-items-center">
+                            <label> Please select subjects you can teach </label>
+                        </div>
+                        <div class="col">
+                            <div class="dropdown float-end">
+                                <a class="btn btn-color dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false">
+                                    Select subject
+                                </a>
+                                <ul class="dropdown-menu">
+                                    {% for row in subjects %}
+                                        {% set subject_id = row['subject_id'] %}
+                                        {% set subject_name = row['subject_name'] %}
+                                        <li><a class="dropdown-item" onclick="select_subject('{{ subject_id }}', '{{subject_name}}')">{{ subject_name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-2 border-bottom"></div>
+                    <div id="selected_subjects" class="row d-flex justify-content-center">    
+                        <p hidden name="teacher_subjects" id="teacher_subjects"></p>
                     </div>
                 </div>
-                <div class="dropdown">
-                    <a class="btn btn-secondary dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false">
-                        Select subject
-                    </a>
-                    <ul class="dropdown-menu">
-                        {% for row in subjects %}
-                            {% set subject_id = row['subject_id'] %}
-                            {% set subject_name = row['subject_name'] %}
-                            <li><a class="dropdown-item" onclick="select_subject('{{ subject_id }}', '{{subject_name}}')">{{ subject_name }}</a></li>
-                        {% endfor %}
-                    </ul>
+            </div>
+            </div>
+
+            
+            <div class="border rounded p-2 mb-3">
+                <label>Please select the keystages you can teach</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="ks1">
+                    <label class="form-check-label" for="ks1">
+                        Keystage 1 
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="ks2">
+                    <label class="form-check-label" for="ks2">
+                        Keystage 2
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="ks3">
+                    <label class="form-check-label" for="ks3">
+                        Keystage 3
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="ks4">
+                    <label class="form-check-label" for="ks4">
+                        Keystage 4
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="ks5">
+                    <label class="form-check-label" for="ks5">
+                        Keystage 5 
+                    </label>
                 </div>
             </div>
+
+            <div class="border rounded p-2 mb-3">
+                <label for="teacher_description">Description</label>
+                <textarea class="form-control" placeholder="Leave a comment here" id="teacher_description"></textarea>
+            </div>
             
+            <a href="{{url_for('user_select')}}" class="btn btn-danger">Back</a>
+            <button type="submit" class="btn btn-color">Submit</button>
 
         </form>
 
