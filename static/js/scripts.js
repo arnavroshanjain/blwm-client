@@ -136,7 +136,6 @@ function remove_subject(subject_id, subject_name) {
   selected_subjects_ids = document.getElementById('teacher_subjects').innerHTML;
   document.getElementById('selected_subjects').innerHTML  = selected_subjects.replace('<div class="col-3 bg-color rounded-pill m-1 p-1 ps-2 pe-2">'+subject_name+'<a class="float-end text-dark" onclick="remove_subject('+subject_id+',\''+subject_name+'\')"><i class="bi bi-x-circle"></i></a></div>','');
   document.getElementById('teacher_subjects').innerHTML = selected_subjects_ids.replace(subject_id+' ', '')
-  // window.alert(document.querySelector('#flexCheckDefault').checked)
 }
 
 function teacher_request() {
