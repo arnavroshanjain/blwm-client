@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %} 
+{% include 'navbar.html' %}
+
+
+<div class="container mt-5 p-5">
+   {% for row in school_profile  %}
+   <center><h1>School Profile</h1></center>
+   <center><h2>{{ row['school_name'] }} </h2></center>
+      {% if session.get('login') %}
+   <!-- code adapted from https://getbootstrap.com/docs/5.2/components/navs-tabs/ -->
+   <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Profile</button>
+        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Edit Profile</button>
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Manage Listing</button>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+         <p>Email Address: <a href="mailto:{{ row['school_email']}}">{{ row['school_email'] }}</a></p>
+         <p>Phone Number: {{ row['school_phone_number'] }}</p>
+         <p>School website: <a href="{{ row['school_website'] }}" target="_blank" >{{ row['school_website'] }}</a></p>
+         <p>School Address: {{ row['school_address'] }}</p>
+      </div>
+
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+        {% include 'update_school_info.html' %}
+      </div>
+
+      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+
+      </div>
+    </div>    
+    <!-- end of adapted code -->
+      {% else %}
+
+    <p>Email Address: <a href="mailto:{{ row['school_email']}}">{{ row['school_email'] }}</a></p>
+    <p>Phone Number: {{ row['school_phone_number'] }}</p>
+    <p>School website: <a href="{{ row['school_website'] }}" target="_blank" >{{ row['school_website'] }}</a></p>
+    <p>School Address: {{ row['school_address'] }}</p>
+
+      {% endif %}
+   {% endfor %}
+
+</div>
+{% endblock %}
