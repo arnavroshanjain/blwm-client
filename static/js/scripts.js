@@ -132,8 +132,6 @@ function createJobListing() {
   
   const time1 = (startTime);
   const time2 = (endTime);
-  window.alert(time1)
-  window.alert(time2)
 
   if (time1 > time2) {
     return window.alert("Please enter a correct time")
