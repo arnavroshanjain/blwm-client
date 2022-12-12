@@ -129,6 +129,16 @@ function createJobListing() {
   var date = document.getElementById('date').value;
   var startTime = document.getElementById('startTime').value;
   var endTime = document.getElementById('endTime').value;
+  
+  const time1 = (startTime);
+  const time2 = (endTime);
+  window.alert(time1)
+  window.alert(time2)
+
+  if (time1 > time2) {
+    return window.alert("Please enter a correct time")
+  } 
+
   var params = 'subject='+subject+'&keystage='+keystage+'&date='+date+'&startTime='+startTime+'&endTime='+endTime;    
   var xhttp = new XMLHttpRequest();
   xhttp.open('POST', 'listing_request', true);
@@ -136,7 +146,7 @@ function createJobListing() {
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
         var response = xhttp.responseText;
-        if (response == 'True') {
+        if (response == 'true') {
           window.alert('Job listing successful')
           window.location.replace('../');
         } else {
