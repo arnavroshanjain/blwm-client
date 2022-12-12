@@ -1,27 +1,34 @@
+function test(){
+  window.alert("hello")
+}
+
+
+
 function send_register(){
-  var name = document.getElementById('name').value;
-  var lastName = document.getElementById('lastName').value;
-  var email = document.getElementById('email').value;
-  var password = document.getElementById('password').value;
-  var params = 'name='+name+'&lastName='+lastName+'&email='+email+'&password='+password;
-  var xhttp = new XMLHttpRequest();
-  xhttp.open('POST', 'register_request', true);
-  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-  xhttp.onreadystatechange = function() {
-    if (xhttp.readyState === 4 && xhttp.status === 200) {
-      var response = xhttp.responseText;
-      if (response == 'true') {
-        window.alert('Account created')
-        window.location.replace('../register/user_select');
+  window.alert("hello")
+    var name = document.getElementById('name').value;
+    var lastName = document.getElementById('lastName').value;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    var params = 'name='+name+'&lastName='+lastName+'&email='+email+'&password='+password;
+    var xhttp = new XMLHttpRequest();
+    xhttp.open('POST', 'register_request', true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        var response = xhttp.responseText;
+        if (response == 'true') {
+          window.alert('Account created')
+          window.location.replace('../register/user_select');
+        } else {
+          window.alert(response)
+        }
       } else {
-        window.alert(response)
+        console.error(xhttp.statusText);
       }
-    } else {
-      console.error(xhttp.statusText);
-    }
-  };
-  xhttp.send(params);
-  return false;
+    };
+    xhttp.send(params);
+    return false;
   }
 
 function contact() {
@@ -139,7 +146,6 @@ function update_profile(){
       if (xhttp.readyState === 4 && xhttp.status === 200) {
         var response = xhttp.responseText;
         window.alert(response);
-        if (response=="True"){
         if (response=="true"){
           window.alert("Information has been Updated");
           window.location.replace('/user');

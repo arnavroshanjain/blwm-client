@@ -129,6 +129,8 @@ def loginPage():
 @app.route('/login_request', methods=["POST","GET"])
 def login_request():
 	if request.method == 'POST':
+		print("hello")
+		print(request)
 		email = request.form['email']
 		password = request.form['password']
 	conn=get_db_connection()
