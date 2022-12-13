@@ -54,7 +54,7 @@
 
       <!-- {{user_info}} -->
         {% for row in user_info %}
-          <h2 align=center> Welcome, {{row['first_name']}} {{row['last_name']}}</h2>
+          <h2 align=center> {{row['first_name']}} {{row['last_name']}}</h2>
           <h3> Your Details: </h3>
           <div class="col bg-white">
             <div class="border border-dark">
@@ -63,7 +63,9 @@
               <p> <b>Registered Email: </b>{{row['email']}}</p>
               <p> <b>Key Stages: </b>{{row['keystage']}}</p>
               <p> <b>Subject id: </b>{{row['subject_id']}} </p>
+              <p> <b>Subjects Taught:</b>{{row['subject_name']}}</p>
               <p> <b>Description:</b> {{row['description']}} </p>
+
               {% endfor %}
             </div>
           <div>

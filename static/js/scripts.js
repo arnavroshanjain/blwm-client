@@ -132,12 +132,11 @@ function create_school_request() {
 function update_profile(){
   var firstName = document.getElementById('inputFName').value;
   var lastName = document.getElementById('inputLName').value;
-  var userId = document.getElementById('userID').value;
   // var userId = document.getElementById('userID').value;
   var email = document.getElementById('inputEmail').value;
-  console.log(firstName, lastName, userId, email);
-  var params = 'inputFName='+firstName+'&inputLName='+lastName+'&inputEmail='+email+'&userId='+userId;
+  //var keyStages = document.getElementById('keyStages')
   console.log(firstName, lastName, email);
+  //var params = 'inputFName='+firstName+'&inputLName='+lastName+'&inputEmail='+email+'&userId='+userId;
   var params = 'inputFName='+firstName+'&inputLName='+lastName+'&inputEmail='+email;
   var xhttp = new XMLHttpRequest();
   xhttp.open('POST', 'update', true);

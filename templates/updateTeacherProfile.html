@@ -16,16 +16,24 @@
     <input value="{{row['email']}}" type="email" class="form-control" id="inputEmail" name="inputEmail">
   </div>
 
+  <div class="mb-3">
+    <label for="subject_name" class="form-label">Subjects Taught</label>
+    <input value= "{{row['subject_name']}}" type="text" class="form-control" id="sub" name="subject_name">
+  </div>
+
+  <div class="mb-3">
+    <label for="keyStages" class="form-label">Key Stages</label>
+    <input value= "{{row['keystages']}}" type="text" class="form-control" id="keyStages" name="keyStages">
+  </div>
+
+
   <div class="col text-center">
     <button  type="submit" class="btn btn-warning" name="button">Update Deatils</button>
   </div>
   <input type="hidden" id="user_id" name="userId" value="{{row['user_id']}}">
 
 
-  <div class="mb-3">
-    <label for="keyStages" class="form-label">Key Stages</label>
-    <input value= "{{row['keystages']}}" type="text" class="form-control" id="keyStages" name="keyStages">
-  </div>
+
   {% endfor %}
 
 

@@ -192,7 +192,7 @@ def show_user_profile(user_id):
 	conn=get_db_connection()
 	id=escape(user_id)
 	# sql_request = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {id}').fetchall()
-	sql_request = conn.execute(f'SELECT * FROM tbl_users INNER JOIN tbl_teacher_keystages ON tbl_users.user_id = tbl_teacher_keystages.user_id INNER JOIN tbl_teacher_subjects ON tbl_users.user_id = tbl_teacher_subjects.user_id INNER JOIN tbl_teacher_description ON tbl_users.user_id = tbl_teacher_description.user_id WHERE tbl_users.user_id = {id}').fetchall()
+	sql_request = conn.execute(f'SELECT * FROM tbl_users INNER JOIN tbl_teacher_keystages ON tbl_users.user_id = tbl_teacher_keystages.user_id INNER JOIN tbl_subjects ON tbl_teacher_subjects.subject_id=tbl_subjects.subject_id INNER JOIN tbl_teacher_subjects ON tbl_users.user_id = tbl_teacher_subjects.user_id INNER JOIN tbl_teacher_description ON tbl_users.user_id = tbl_teacher_description.user_id WHERE tbl_users.user_id = {id}').fetchall()
 
 	return render_template('teacherProfile.html',user_info = sql_request)
 
@@ -205,16 +205,17 @@ def update_profile():
 		lastName = request.form['inputLName']
 		email = request.form['inputEmail']
 		user_id = session["login"]
-		keyStages=request.form['keyStages']
-		subject_id= request.form['subject_id']
-		description= request.form['description']
+		# keyStages=request.form['keyStages']
+		# subject_id= request.form['subject_id']
+		# description= request.form['description']
+		# subject_name=request.form['subject_name']
 
 	print (firstName, lastName, email, user_id)
 
 	conn = get_db_connection()
 
 	conn.execute(f'UPDATE tbl_users SET first_name = ?, last_name = ?, email = ? WHERE user_id=?;', (firstName, lastName, email,user_id))
-	conn.execute(f'UPDATE tbl_teacher_keystages SET key_stages = ? WHERE user_id=?;', (keyStages, user_id))
+	# conn.execute(f'UPDATE tbl_teacher_keystages SET key_stages = ? WHERE user_id=?;', (keyStages, user_id))
 	print(user_id)
 	conn.commit()
 	conn.close()
