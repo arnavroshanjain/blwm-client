@@ -206,6 +206,8 @@ def update_profile():
 		email = request.form['inputEmail']
 		user_id = session["login"]
 		keyStages=request.form['keyStages']
+		subject_id= request.form['subject_id']
+		description= request.form['description']
 
 	print (firstName, lastName, email, user_id)
 
