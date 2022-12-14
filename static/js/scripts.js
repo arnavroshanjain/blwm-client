@@ -149,3 +149,10 @@ function update() {
   xhttp.send(params);
   return false;
 }
+
+function test() {
+  v1 = document.getElementById('v1').value;
+  v2 = document.getElementById('v2').value;
+  window.alert(v1);
+  window.alert(v2);
+}

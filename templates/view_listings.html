@@ -8,8 +8,6 @@
         <h1 class="title">Job listings</h1>
         <p class="mb-3">All available listings you can teach</p>
 
-        
-
         {% for row in listings %}
         <div class="bg-light rounded mb-3 shadow border p-2">
             <div class="row">
@@ -17,17 +15,19 @@
                     <p>{{row['school_name']}}</p>
                 </div>
                 <div class="col">
-                    <p>{{row['subject_name']}}, Keystage {{row['listing_keystage']}}</p>
+                    {% set var =  row['subject_name']%}
+                    <p>{{var}}, Keystage {{row['listing_keystage']}}</p>
                 </div>
                 <div class="col">
                     <p>{{row['listing_date']}}, {{row['listing_start_time']}} - {{row['listing_end_time']}}</p>
                 </div>
                 <div class="col">
-                    <button type="button" class="btn btn-color float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            
+                    <button type="button" class="btn btn-color float-end" data-bs-toggle="modal" data-bs-target="#i{{modal_id}}d">
                         More info
-                    </button>
+                    </button>   
 
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="i{{modal_id}}d" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -49,15 +49,16 @@
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <a type="button" class="btn btn-color">Accept job</a>
+                            <form onsubmit="return test()">
+                                <input hidden type="text" value="{{row['listing_id']}}" id="listing_id">
+                                <button type="submit" class="btn btn-color">Accept job</button>
+                            </form>
                             </div>
                         </div>
                         </div>
                     </div>
                 </div>
-                
             </div>
-            
         </div>
         {% endfor %}
     </div>
