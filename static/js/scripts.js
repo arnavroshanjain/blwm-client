@@ -152,9 +152,7 @@ function update() {
 
 function accept_listing() {
   listing_id = document.getElementById('listing_id').value;
-
   var params = 'listing_id='+listing_id;    
-  
   var xhttp = new XMLHttpRequest();
   xhttp.open('POST', 'view_listings/accept_listing', true);
   xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
