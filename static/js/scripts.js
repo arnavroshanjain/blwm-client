@@ -134,10 +134,10 @@ function update_profile(){
   var lastName = document.getElementById('inputLName').value;
   // var userId = document.getElementById('userID').value;
   var email = document.getElementById('inputEmail').value;
-  //var keyStages = document.getElementById('keyStages')
+  var keyStage = document.getElementById('keyStages').value;
   console.log(firstName, lastName, email);
-  //var params = 'inputFName='+firstName+'&inputLName='+lastName+'&inputEmail='+email+'&userId='+userId;
-  var params = 'inputFName='+firstName+'&inputLName='+lastName+'&inputEmail='+email;
+  var params = 'inputFName='+firstName+'&inputLName='+lastName+'&inputEmail='+email+'&keyStages='+keyStage;
+  //var params = 'inputFName='+firstName+'&inputLName='+lastName+'&inputEmail='+email;
   var xhttp = new XMLHttpRequest();
   xhttp.open('POST', 'update', true);
   xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');

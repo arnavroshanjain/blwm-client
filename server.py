@@ -205,7 +205,7 @@ def update_profile():
 		lastName = request.form['inputLName']
 		email = request.form['inputEmail']
 		user_id = session["login"]
-		# keyStages=request.form['keyStages']
+		keyStage=request.form['keyStages']
 		# subject_id= request.form['subject_id']
 		# description= request.form['description']
 		# subject_name=request.form['subject_name']
@@ -214,8 +214,9 @@ def update_profile():
 
 	conn = get_db_connection()
 
-	conn.execute(f'UPDATE tbl_users SET first_name = ?, last_name = ?, email = ? WHERE user_id=?;', (firstName, lastName, email,user_id))
-	# conn.execute(f'UPDATE tbl_teacher_keystages SET key_stages = ? WHERE user_id=?;', (keyStages, user_id))
+	conn.execute(f'UPDATE tbl_users SET first_name = ?, last_name = ?, email = ? WHERE user_id=?;', (firstName, lastName, email, user_id))
+	conn.commit()
+	conn.execute(f'UPDATE tbl_teacher_keystages SET keystage = ? WHERE user_id=?;', (keyStage, user_id))
 	print(user_id)
 	conn.commit()
 	conn.close()
