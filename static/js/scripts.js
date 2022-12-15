@@ -135,8 +135,9 @@ function update_profile(){
   // var userId = document.getElementById('userID').value;
   var email = document.getElementById('inputEmail').value;
   var keyStage = document.getElementById('keyStages').value;
+  var description = document.getElementById('description').value;
   console.log(firstName, lastName, email);
-  var params = 'inputFName='+firstName+'&inputLName='+lastName+'&inputEmail='+email+'&keyStages='+keyStage;
+  var params = 'inputFName='+firstName+'&inputLName='+lastName+'&inputEmail='+email+'&keyStages='+keyStage +'&description='+description;
   //var params = 'inputFName='+firstName+'&inputLName='+lastName+'&inputEmail='+email;
   var xhttp = new XMLHttpRequest();
   xhttp.open('POST', 'update', true);
