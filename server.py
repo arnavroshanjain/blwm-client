@@ -205,11 +205,6 @@ def update():
 @app.route('/view_listings')
 def view_listings():
 
-	# SELECT column_name(s)
-	# FROM table1
-	# INNER JOIN table2
-	# ON table1.column_name = table2.column_name;
-
 	if check_login()[0] != True:
 		return redirect(url_for('loginPage'))
 	elif check_login()[1] != 'teacher':
@@ -217,12 +212,27 @@ def view_listings():
 
 	try:
 		conn = get_db_connection()
-		listings = conn.execute(f'SELECT * FROM tbl_teacher_subjects AS s INNER JOIN tbl_teacher_keystages AS k ON s.user_id = k.user_id INNER JOIN tbl_subjects ON s.subject_id = tbl_subjects.subject_id INNER JOIN tbl_listings AS l ON s.subject_id = l.listing_subject INNER JOIN tbl_listings AS l2 ON k.keystage = l2.listing_keystage INNER JOIN tbl_schools ON tbl_schools.school_id = l.school_id WHERE s.user_id = {session["login"]} GROUP BY l.listing_id').fetchall() 
+		listings = conn.execute(f'SELECT * FROM tbl_teacher_subjects AS s INNER JOIN tbl_teacher_keystages AS k ON s.user_id = k.user_id INNER JOIN tbl_subjects ON s.subject_id = tbl_subjects.subject_id INNER JOIN tbl_listings AS l ON s.subject_id = l.listing_subject INNER JOIN tbl_listings AS l2 ON k.keystage = l2.listing_keystage INNER JOIN tbl_schools ON tbl_schools.school_id = l.school_id WHERE s.user_id = {session["login"]} AND l.accepted_by IS NULL GROUP BY l.listing_id').fetchall() 
 		conn.close()
 	except:
 		return redirect(url_for('homepage'))
 
 	return render_template('view_listings.html', listings = listings)
+
+@app.route('/view_listings/accept_listing', methods=['GET', 'POST'])
+def accept_listing():
+	if request.method == 'POST':
+		listing_id = request.form['listing_id']
+	try:
+		conn = get_db_connection()
+		conn.execute(f'UPDATE tbl_listings SET accepted_by = {session["login"]} WHERE listing_id = {listing_id}')
+		conn.commit()
+		return 'true'
+	except:
+		return 'Failed to accept listing'
+	finally:
+		conn.close()
+		
 
 if __name__ == "__main__":
 	app.run(debug=True)

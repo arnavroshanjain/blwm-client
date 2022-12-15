@@ -22,7 +22,7 @@
                     <p>{{row['listing_date']}}, {{row['listing_start_time']}} - {{row['listing_end_time']}}</p>
                 </div>
                 <div class="col">
-                            
+
                     <button type="button" class="btn btn-color float-end" data-bs-toggle="modal" data-bs-target="#i{{modal_id}}d">
                         More info
                     </button>   
@@ -49,9 +49,9 @@
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <form onsubmit="return test()">
+                            <form onsubmit="return accept_listing()">
                                 <input hidden type="text" value="{{row['listing_id']}}" id="listing_id">
-                                <button type="submit" class="btn btn-color">Accept job</button>
+                                <button type="submit" id="btn{{row['listing_id']}}btn" class="btn btn-color">Accept job</button>
                             </form>
                             </div>
                         </div>

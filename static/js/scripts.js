@@ -150,9 +150,27 @@ function update() {
   return false;
 }
 
-function test() {
-  v1 = document.getElementById('v1').value;
-  v2 = document.getElementById('v2').value;
-  window.alert(v1);
-  window.alert(v2);
+function accept_listing() {
+  listing_id = document.getElementById('listing_id').value;
+
+  var params = 'listing_id='+listing_id;    
+  
+  var xhttp = new XMLHttpRequest();
+  xhttp.open('POST', 'view_listings/accept_listing', true);
+  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        var response = xhttp.responseText;
+        if (response == 'true') {
+          window.alert('Job accepted, view your profile for more info')
+          window.location.reload(true);
+        } else {
+          window.alert(response);
+        }
+      } else {
+        console.error(xhttp.statusText);
+      }
+    };
+  xhttp.send(params);
+  return false;
 }
