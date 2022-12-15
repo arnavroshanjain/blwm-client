@@ -53,7 +53,7 @@
   <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
 
       <!-- {{user_info}} -->
-        {% for row in user_info %}
+          {% for row in user %}
           <h2 align=center> {{row['first_name']}} {{row['last_name']}}</h2>
           <h3> Your Details: </h3>
           <div class="col bg-white">
@@ -62,10 +62,21 @@
               <p> <b>Last Name: </b>{{row['last_name']}}</p>
               <p> <b>Registered Email: </b>{{row['email']}}</p>
               <p> <b>Key Stages: </b>{{row['keystage']}}</p>
-              <p> <b>Subject id: </b>{{row['subject_id']}} </p>
-              <p> <b>Description:</b> {{row['description']}} </p>
-
               {% endfor %}
+              <p><b> Keystages: </b></p>
+              {% for row in keystages %}
+                {{row['keystage']}}
+              {% endfor %}
+              <p><b> Subjects Taught: </b></p>
+              {% for row in subject_names %}
+                <p>{{row['subject_name']}}</p>
+              {% endfor %}
+              <p><b> Description: </b></p>
+              {% for row in description %}
+                <p>{{row['description']}}</p>
+              {% endfor %}
+
+
             </div>
           <div>
         </div>

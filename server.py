@@ -192,9 +192,13 @@ def show_user_profile(user_id):
 	conn=get_db_connection()
 	id=escape(user_id)
 	# sql_request = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {id}').fetchall()
-	sql_request = conn.execute(f'SELECT * FROM tbl_users INNER JOIN tbl_teacher_keystages ON tbl_users.user_id = tbl_teacher_keystages.user_id INNER JOIN tbl_subjects ON tbl_teacher_subjects.subject_id=tbl_subjects.subject_id INNER JOIN tbl_teacher_subjects ON tbl_users.user_id = tbl_teacher_subjects.user_id INNER JOIN tbl_teacher_description ON tbl_users.user_id = tbl_teacher_description.user_id WHERE tbl_users.user_id = {id}').fetchall()
+	# sql_request = conn.execute(f'SELECT * FROM tbl_users INNER JOIN tbl_teacher_keystages ON tbl_users.user_id = tbl_teacher_keystages.user_id INNER JOIN tbl_subjects ON tbl_teacher_subjects.subject_id=tbl_subjects.subject_id INNER JOIN tbl_teacher_subjects ON tbl_users.user_id = tbl_teacher_subjects.user_id INNER JOIN tbl_teacher_description ON tbl_users.user_id = tbl_teacher_description.user_id WHERE tbl_users.user_id = {id} GROUP BY tbl_teacher_subjects.subject_id').fetchall()
+	keystages = conn.execute(f'SELECT * FROM tbl_teacher_keystages WHERE user_id = {session["login"]}').fetchall()
+	description = conn.execute(f'SELECT * FROM tbl_teacher_description WHERE user_id = {session["login"]}').fetchall()
+	user = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {session["login"]}')
+	subject_names = conn.execute(f'SELECT * FROM tbl_teacher_subjects AS ts INNER JOIN tbl_subjects AS s ON ts.subject_id = s.subject_id WHERE ts.user_id = {session["login"]}')
 
-	return render_template('teacherProfile.html',user_info = sql_request)
+	return render_template('teacherProfile.html',keystages = keystages, subject_names=subject_names, user=user, description=description)
 
 
 @app.route('/user/update', methods=['POST','GET'])
