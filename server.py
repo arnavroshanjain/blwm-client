@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 import sqlite3
-from datetime import date 
+from datetime import date
 from werkzeug.utils import secure_filename
 from markupsafe import escape
 
@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'SuperSecretKey'
 
 def check_login():
-	try:	
+	try:
 		user_id = session['login']
 	except KeyError:
 		return False, None
@@ -47,7 +47,7 @@ def contact_request():
 		email = request.form['email']
 		number = request.form['number']
 		comment = request.form['comment']
-  
+
 	conn = get_db_connection()
 	conn.execute('INSERT INTO tbl_contact (first_name, last_name, email, number, comment) VALUES (?, ?, ?, ?, ?)',
 	(first_name, last_name, email, number, comment))
@@ -67,7 +67,7 @@ def create_school():
 
 @app.route('/register/school_request', methods=['POST', 'GET'])
 def create_school_request():
-	if request.method == 'POST': 
+	if request.method == 'POST':
 		name = request.form['name']
 		address = request.form['address']
 		email = request.form['email']
@@ -77,7 +77,7 @@ def create_school_request():
 		conn.execute('INSERT INTO tbl_schools (school_name, school_address, school_logo, school_email, school_phone_number, school_website,creator_user_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
 		(name, address, 'logo', email, phone_number, website, session['login']))
 		conn.commit()
-		id_row = conn.execute('SELECT school_id FROM tbl_schools WHERE school_name = ? AND creator_user_id = ?', 
+		id_row = conn.execute('SELECT school_id FROM tbl_schools WHERE school_name = ? AND creator_user_id = ?',
 		(name, session['login'])).fetchall()
 		school_id = id_row[-1]['school_id']
 		user_id = session['login']
@@ -131,6 +131,8 @@ def loginPage():
 @app.route('/login_request', methods=["POST","GET"])
 def login_request():
 	if request.method == 'POST':
+		print("hello")
+		print(request)
 		email = request.form['email']
 		password = request.form['password']
 	conn=get_db_connection()
@@ -173,12 +175,77 @@ def user_select():
 		name = row['first_name']
 
 	return render_template('user_select.html', title='User select', name=name)
+@app.route('/teacherProfile')
+def teacherProfile():
+	return render_template('teacherProfile.html')
 
 
-@app.route('/listing', methods=['POST','GET']) 
+@app.route('/user/<user_id>',methods=['POST','GET'])
+
+def show_user_profile(user_id):
+	if check_login()[0] != True:
+		return redirect(url_for('loginPage'))
+	print (str(user_id) != str(session['login'])) # true
+	if str(user_id) != str(session['login']):
+		return redirect(url_for('homepage'))
+
+	print('OUTPUT:',user_id)
+
+	conn=get_db_connection()
+	id=escape(user_id)
+	# sql_request = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {id}').fetchall()
+	sql_request = conn.execute(f'SELECT * FROM tbl_users INNER JOIN tbl_teacher_keystages ON tbl_users.user_id = tbl_teacher_keystages.user_id INNER JOIN tbl_subjects ON tbl_teacher_subjects.subject_id=tbl_subjects.subject_id INNER JOIN tbl_teacher_subjects ON tbl_users.user_id = tbl_teacher_subjects.user_id INNER JOIN tbl_teacher_description ON tbl_users.user_id = tbl_teacher_description.user_id WHERE tbl_users.user_id = {id} GROUP BY tbl_teacher_subjects.subject_id').fetchall()
+	keystages = conn.execute(f'SELECT * FROM tbl_teacher_keystages WHERE user_id = {session["login"]}').fetchall()
+	description = conn.execute(f'SELECT * FROM tbl_teacher_description WHERE user_id = {session["login"]}').fetchall()
+	user = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {session["login"]}').fetchall()
+	subject_names = conn.execute(f'SELECT * FROM tbl_teacher_subjects AS ts INNER JOIN tbl_subjects AS s ON ts.subject_id = s.subject_id WHERE ts.user_id = {session["login"]}').fetchall()
+
+	return render_template('teacherProfile.html',keystages = keystages, subject_names=subject_names, user=user, description=description, user_info = sql_request)
+
+
+@app.route('/user/update', methods=['POST','GET'])
+def update_profile():
+
+	if request.method == 'POST':
+		firstName = request.form['inputFName']
+		lastName = request.form['inputLName']
+		email = request.form['inputEmail']
+		user_id = session["login"]
+		keyStage=request.form['keyStages']
+		# subject_id= request.form['subject_id']
+		description= request.form['description']
+		# subject_name=request.form['subject_name']
+
+	print (firstName, lastName, email, user_id)
+
+	conn = get_db_connection()
+
+	conn.execute(f'UPDATE tbl_users SET first_name = ?, last_name = ?, email = ? WHERE user_id=?;', (firstName, lastName, email, user_id))
+	conn.commit()
+	conn.execute(f'UPDATE tbl_teacher_keystages SET keystage = ? WHERE user_id=?;', (keyStage, user_id))
+	conn.commit()
+	conn.execute(f'UPDATE tbl_teacher_description SET description = ? WHERE user_id=?;',(user_id, description))
+	print(user_id)
+	conn.commit()
+	conn.close()
+	return 'true'
+
+
+
+	for row in school_id:
+		current_id=row['school_id']
+	conn.execute('INSERT INTO tbl_listings (school_id, listing_subject, listing_keystage, listing_date, listing_start_time, listing_end_time) VALUES (?,?, ?, ?, ?, ?)',
+	(current_id, subject, keystage, calendar, startTime, endTime))
+	conn.commit()
+	conn.close()
+
+	return render_template('jobListing.html')
+
+
+@app.route('/listing', methods=['POST','GET'])
 def listed():
 	today = date.today()
-	
+
 	conn = get_db_connection()
 	subs = conn.execute(f"SELECT * FROM tbl_subjects").fetchall()
 
@@ -197,8 +264,10 @@ def listing_delete():
 	conn.execute(f'DELETE FROM tbl_listings WHERE listing_id = {listed}')
 	conn.commit()
 	conn.close()
-	
+
 	return redirect(url_for('listed'))
+
+
 
 @app.route('/listing_request', methods=['POST','GET'])
 def listing_request():
@@ -208,10 +277,10 @@ def listing_request():
 		calendar = request.form['date']
 		startTime = request.form['startTime']
 		endTime = request.form['endTime']
-  
+
 	conn = get_db_connection()
 	school_id = conn.execute(f'SELECT school_id FROM tbl_users WHERE user_id = {session["login"]}').fetchall()
-	
+
 	for row in school_id:
 		current_id=row['school_id']
 	conn.execute('INSERT INTO tbl_listings (school_id, listing_subject, listing_keystage, listing_date, listing_start_time, listing_end_time) VALUES (?,?, ?, ?, ?, ?)',
@@ -230,12 +299,13 @@ def school_profile(school_id):
 	today = date.today()
 	subs = conn.execute(f"SELECT * FROM tbl_subjects").fetchall()
 	conn.close()
+
 	return render_template('school_profile.html', title='School Profile', school_profile = school_info, today=today,subs=subs)
-	
+
 
 @app.route('/school_profile/update_school_info', methods=['POST','GET'] )
 def update():
-	if request.method == 'POST': 
+	if request.method == 'POST':
 		school_name = request.form['school_name']
 		school_address = request.form['school_address']
 		school_logo = request.form['school_logo']
@@ -250,9 +320,9 @@ def update():
 		conn.commit()
 		conn.close()
 		return "True"
-	except: 
+	except:
 		return "False"
-		
+
 
 if __name__ == "__main__":
 	app.run(debug=True)
