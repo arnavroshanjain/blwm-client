@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'navbar.html ' %}
+
+
+    <div class="container pt-5 mt-5">
+
+        <h1 class="title">Job listings</h1>
+        <p class="mb-3">All available listings you can teach</p>
+
+        {% for row in listings %}
+        <div class="bg-light rounded mb-3 shadow border p-2">
+            <div class="row">
+                <div class="col">
+                    <p>{{row['school_name']}}</p>
+                </div>
+                <div class="col">
+                    {% set var =  row['subject_name']%}
+                    <p>{{var}}, Keystage {{row['listing_keystage']}}</p>
+                </div>
+                <div class="col">
+                    <p>{{row['listing_date']}}, {{row['listing_start_time']}} - {{row['listing_end_time']}}</p>
+                </div>
+                <div class="col">
+
+                    <button type="button" class="btn btn-color float-end" data-bs-toggle="modal" data-bs-target="#i{{row['listing_id']}}d">
+                        More info
+                    </button>   
+
+                    <div class="modal fade" id="i{{row['listing_id']}}d" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">{{row['school_name']}}</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><b>Subject:</b> {{row['subject_name']}}</p>
+                                <p><b>Keystage:</b> {{row['listing_keystage']}}</p>
+                                <br>
+                                <p><b>Phone number:</b> {{row['school_phone_number']}}</p>
+                                <p><b>Email:</b> {{row['school_email']}}</p>
+                                <p><b>Website:</b> {{row['school_website']}}</p>
+                                <p><b>Address:</b> {{row['school_address']}}</p>
+                                <br>
+                                <p><b>Date:</b> {{row['listing_date']}}</p>
+                                <p><b>Start</b> time: {{row['listing_start_time']}} - End time: {{row['listing_end_time']}}</p>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <form onsubmit="return accept_listing()">
+                                <input hidden type="text" value="{{row['listing_id']}}" id="listing_id">
+                                <button type="submit" id="btn{{row['listing_id']}}btn" class="btn btn-color">Accept job</button>
+                            </form>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
