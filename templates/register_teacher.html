@@ -97,9 +97,11 @@
                 <label for="teacher_description">Description</label>
                 <textarea class="form-control" placeholder="Leave a comment here" id="teacher_description"></textarea>
             </div>
-            
-            <a href="{{url_for('user_select')}}" class="btn btn-danger">Back</a>
-            <button type="submit" class="btn btn-color">Submit</button>
+
+            <div class="d-flex justify-content-center">
+                <a href="{{url_for('user_select')}}" class="btn btn-danger m-2">Back</a>
+                <button type="submit" class="btn btn-color m-2">Submit</button>
+            </div>
 
         </form>
 
