@@ -128,7 +128,6 @@ function createJobListing() {
   var date = document.getElementById('date').value;
   var startTime = document.getElementById('startTime').value;
   var endTime = document.getElementById('endTime').value;
-  var hidden_value = document.getElementById('id_school').value;
   const time1 = (startTime);
   const time2 = (endTime);
 
@@ -145,7 +144,7 @@ function createJobListing() {
         var response = xhttp.responseText;
         if (response == 'true') {
           window.alert('Job listing successful')
-          window.location.replace('../');
+          window.location.reload(true);
         } else {
           window.alert(response);
         }
