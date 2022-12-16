@@ -20,6 +20,7 @@
         <form class="container-fluid justify-content-start" align="right">
           {% if session.get('login') %}
           <a href="{{url_for('logout')}}"><button class="btn btn-sm btn-outline-secondary" type="button">Logout</button></a>
+          <a href="{{url_for('account')}}" class="btn btn-color btn-sm" >Account</a>
           {% else %}
           <a href="{{url_for('loginPage')}}"><button class="btn btn-sm btn-outline-secondary" type="button">Login</button></a>
           <a href="{{url_for('signUp')}}"><button class="btn btn-sm btn-outline-secondary" type="button">Signup</button></a>
