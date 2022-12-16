@@ -23,11 +23,11 @@
                 </div>
                 <div class="col">
 
-                    <button type="button" class="btn btn-color float-end" data-bs-toggle="modal" data-bs-target="#i{{modal_id}}d">
+                    <button type="button" class="btn btn-color float-end" data-bs-toggle="modal" data-bs-target="#i{{row['listing_id']}}d">
                         More info
                     </button>   
 
-                    <div class="modal fade" id="i{{modal_id}}d" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="i{{row['listing_id']}}d" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -35,17 +35,17 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>LocationL {{row['school_address']}}</p>
-                                <p>Subject: {{row['subject_name']}}</p>
-                                <p>Keystage: {{row['listing_keystage']}}</p>
+                                <p><b>Location:</b> {{row['school_address']}}</p>
+                                <p><b>Subject:</b> {{row['subject_name']}}</p>
+                                <p><b>Keystage:</b> {{row['listing_keystage']}}</p>
                                 <br>
-                                <p>Phone number: {{row['school_phone_number']}}</p>
-                                <p>Email: {{row['school_email']}}</p>
-                                <p>Website: {{row['school_website']}}</p>
-                                <p>Address: {{row['school_address']}}</p>
+                                <p><b>Phone number:</b> {{row['school_phone_number']}}</p>
+                                <p><b>Email:</b> {{row['school_email']}}</p>
+                                <p><b>Website:</b> {{row['school_website']}}</p>
+                                <p><b>Address:</b> {{row['school_address']}}</p>
                                 <br>
-                                <p>Date: {{row['listing_date']}}</p>
-                                <p>Start time: {{row['listing_start_time']}} - End time: {{row['listing_end_time']}}</p>
+                                <p><b>Date:</b> {{row['listing_date']}}</p>
+                                <p><b>Start</b> time: {{row['listing_start_time']}} - End time: {{row['listing_end_time']}}</p>
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
