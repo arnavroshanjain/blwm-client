@@ -290,53 +290,6 @@ def listing_request():
 
 	return render_template('jobListing.html')
 
-
-@app.route('/listing', methods=['POST','GET']) 
-def listed():
-	today = date.today()
-	
-	conn = get_db_connection()
-	subs = conn.execute(f"SELECT * FROM tbl_subjects").fetchall()
-
-
-	school_id = conn.execute(f'SELECT school_id FROM tbl_users WHERE user_id = {session["login"]}').fetchall()
-	fields = conn.execute(f'SELECT * FROM tbl_listings WHERE school_id = {school_id[0]["school_id"]}').fetchall()
-	conn.close()
-
-	return render_template('jobListing.html', today=today,subs=subs,fields=fields)
-
-
-@app.route('/listing_delete', methods=['GET', 'POST'])
-def listing_delete():
-	listed = request.form['lists']
-	conn = get_db_connection()
-	conn.execute(f'DELETE FROM tbl_listings WHERE listing_id = {listed}')
-	conn.commit()
-	conn.close()
-	
-	return redirect(url_for('listed'))
-
-@app.route('/listing_request', methods=['POST','GET'])
-def listing_request():
-	if request.method == 'POST':
-		subject = request.form['subject']
-		keystage = request.form['keystage']
-		calendar = request.form['date']
-		startTime = request.form['startTime']
-		endTime = request.form['endTime']
-  
-	conn = get_db_connection()
-	school_id = conn.execute(f'SELECT school_id FROM tbl_users WHERE user_id = {session["login"]}').fetchall()
-	
-	for row in school_id:
-		current_id=row['school_id']
-	conn.execute('INSERT INTO tbl_listings (school_id, listing_subject, listing_keystage, listing_date, listing_start_time, listing_end_time) VALUES (?,?, ?, ?, ?, ?)',
-	(current_id, subject, keystage, calendar, startTime, endTime))
-	conn.commit()
-	conn.close()
-
-	return render_template('jobListing.html')
-
 @app.route('/school_profile/<school_id>', methods=['POST','GET'])
 def school_profile(school_id):
 	print ('OUTPUT:',school_id)
