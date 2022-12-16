@@ -87,6 +87,54 @@ def create_school_request():
 		return 'True'
 	return 'Failed to create school, please try again.'
 
+@app.route('/register/teacher', methods=['POST', 'GET'])
+def register_teacher():
+
+	if check_login()[0] != True:
+		return redirect(url_for('signUp'))
+	elif check_login()[1] != None:
+		return redirect(url_for('homepage'))
+	
+	conn = get_db_connection()
+	subjects = conn.execute('SELECT * FROM tbl_subjects').fetchall()
+	user_info = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {session["login"]}').fetchall()
+	conn.close()
+
+	return render_template('register_teacher.html', subjects=subjects, user_info=user_info)
+
+@app.route('/register/teacher_request', methods=['POST', 'GET'])
+def register_teacher_request():
+
+
+
+	if request.method == 'POST':  
+		subject_ids = request.form['subject_ids']
+		subject_ids = subject_ids.split(' ')
+		teacher_description = request.form['teacher_description']
+		ks_list = [request.form['ks1'],
+				request.form['ks2'],
+				request.form['ks3'],
+				request.form['ks4'],
+				request.form['ks5']]
+
+	try:
+		conn = get_db_connection()
+		for id in subject_ids[:-1]:
+			conn.execute(f'INSERT INTO tbl_teacher_subjects (subject_id, user_id) VALUES ({id}, {session["login"]})')
+			conn.commit()
+		for index, ks in enumerate(ks_list):
+			if ks == 'true':
+				keystage = index + 1
+				conn.execute(f'INSERT INTO tbl_teacher_keystages (keystage, user_id) VALUES ({keystage}, {session["login"]})')
+				conn.commit()
+		conn.execute('INSERT INTO tbl_teacher_description (user_id, description) VALUES (?, ?)', (session["login"], teacher_description))
+		conn.execute(f'UPDATE tbl_users SET supply_teacher = 1 WHERE user_id = {session["login"]}')
+		conn.commit()
+		conn.close()
+		return 'true'
+	except:
+		return 'false'
+
 @app.route('/signUp')
 def signUp():
 	return render_template('signUp.html')
