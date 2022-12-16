@@ -1,47 +1,53 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <form method="post" onsubmit="return update_profile()">
+
   <!-- Adapted from https://getbootstrap.com/docs/5.2/forms/overview/-->
-  {% for row in user_info %}
-  <div class="mb-3">
-    <label for="inputFName" class="form-label">First Name</label>
-    <input value= "{{row['first_name']}}" type="text" class="form-control" id="inputFName" name="inputFName">
-  </div>
-  <div class="mb-3">
-    <label for="inputLName" class="form-label">Last Name</label>
-    <input value="{{row['last_name']}}" type="text" class="form-control" id="inputLName" name="inputLName">
-  </div>
-  <div class="mb-3">
-    <label for="inputEmail" class="form-label">Email address</label>
-    <input value="{{row['email']}}" type="email" class="form-control" id="inputEmail" name="inputEmail">
-  </div>
 
-  <div class="mb-3">
+    {% for row in user %}
+      <div class="mb-3">
+        <label for="inputFName" class="form-label">First Name</label>
+        <input value= "{{row['first_name']}}" type="text" class="form-control" id="inputFName" name="inputFName">
+      </div>
+
+      <div class="mb-3">
+        <label for="inputLName" class="form-label">Last Name</label>
+        <input value="{{row['last_name']}}" type="text" class="form-control" id="inputLName" name="inputLName">
+      </div>
+
+      <div class="mb-3">
+        <label for="inputEmail" class="form-label">Email address</label>
+        <input value="{{row['email']}}" type="email" class="form-control" id="inputEmail" name="inputEmail">
+      </div>
+    {%endfor%}
     <label for="subject_name" class="form-label">Subjects Taught</label>
-    <input value= "{{row['subject_name']}}" type="text" class="form-control" id="sub" name="subject_name">
-  </div>
-
-  <div class="mb-3">
+    {% for row in subject_names %}
+      <div class="mb-3">
+        <input value= "{{row['subject_name']}}" type="text" class="form-control" id="sub" name="subject_name">
+      </div>
+    {% endfor %}
     <label for="keyStages" class="form-label">Key Stages</label>
-    <input value= "{{row['keystage']}}" type="text" class="form-control" id="keyStages" name="keyStages">
-  </div>
+    {% for row in keystages %}
+      <div class="mb-3">
+        <input value= "{{row['keystage']}}" type="text" class="form-control" id="keyStages" name="keyStages">
+      </div>
+    {% endfor %}
 
-  <div class="mb-3">
-    <label for="description" class="form-label">Description</label>
-    <input value= "{{row['description']}}" type="text" class="form-control" id="description" name="description">
-  </div>
+    {% for row in description %}
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input value= "{{row['description']}}" type="text" class="form-control" id="description" name="description">
+      </div>
+    {% endfor %}
 
-  <div class="col text-center">
-    <button  type="submit" class="btn btn-warning" name="button">Update Deatils</button>
-  </div>
-  <input type="hidden" id="user_id" name="userId" value="{{row['user_id']}}">
+    <div class="col text-center">
+      <button  type="submit" class="btn btn-warning" name="button">Update Details</button>
+    </div>
+
+  <!-- end of adapted code -->
 
 
-
-  {% endfor %}
-
-
-<!-- end of adapted code -->
 </form>
 
 {% endblock %}
