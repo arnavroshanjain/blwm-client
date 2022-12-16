@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 import sqlite3
+from datetime import date 
 from werkzeug.utils import secure_filename
 from markupsafe import escape
 
@@ -138,6 +139,7 @@ def register_teacher_request():
 def signUp():
 	return render_template('signUp.html')
 
+
 @app.route('/register_request', methods=['POST','GET'])
 def registerRequest():
 
@@ -220,14 +222,63 @@ def user_select():
 
 	return render_template('user_select.html', title='User select', name=name)
 
+
+@app.route('/listing', methods=['POST','GET']) 
+def listed():
+	today = date.today()
+	
+	conn = get_db_connection()
+	subs = conn.execute(f"SELECT * FROM tbl_subjects").fetchall()
+
+
+	school_id = conn.execute(f'SELECT school_id FROM tbl_users WHERE user_id = {session["login"]}').fetchall()
+	fields = conn.execute(f'SELECT * FROM tbl_listings WHERE school_id = {school_id[0]["school_id"]}').fetchall()
+	conn.close()
+
+	return render_template('jobListing.html', today=today,subs=subs,fields=fields)
+
+
+@app.route('/listing_delete', methods=['GET', 'POST'])
+def listing_delete():
+	listed = request.form['lists']
+	conn = get_db_connection()
+	conn.execute(f'DELETE FROM tbl_listings WHERE listing_id = {listed}')
+	conn.commit()
+	conn.close()
+	
+	return redirect(url_for('listed'))
+
+@app.route('/listing_request', methods=['POST','GET'])
+def listing_request():
+	if request.method == 'POST':
+		subject = request.form['subject']
+		keystage = request.form['keystage']
+		calendar = request.form['date']
+		startTime = request.form['startTime']
+		endTime = request.form['endTime']
+  
+	conn = get_db_connection()
+	school_id = conn.execute(f'SELECT school_id FROM tbl_users WHERE user_id = {session["login"]}').fetchall()
+	
+	for row in school_id:
+		current_id=row['school_id']
+	conn.execute('INSERT INTO tbl_listings (school_id, listing_subject, listing_keystage, listing_date, listing_start_time, listing_end_time) VALUES (?,?, ?, ?, ?, ?)',
+	(current_id, subject, keystage, calendar, startTime, endTime))
+	conn.commit()
+	conn.close()
+
+	return render_template('jobListing.html')
+
 @app.route('/school_profile/<school_id>', methods=['POST','GET'])
 def school_profile(school_id):
 	print ('OUTPUT:',school_id)
 	conn=get_db_connection()
 	id = escape(school_id)
 	school_info = conn.execute(f'SELECT * FROM tbl_schools WHERE school_id = {id}').fetchall()
+	today = date.today()
+	subs = conn.execute(f"SELECT * FROM tbl_subjects").fetchall()
 	conn.close()
-	return render_template('school_profile.html', title='School Profile', school_profile = school_info)
+	return render_template('school_profile.html', title='School Profile', school_profile = school_info, today=today,subs=subs)
 	
 
 @app.route('/school_profile/update_school_info', methods=['POST','GET'] )
