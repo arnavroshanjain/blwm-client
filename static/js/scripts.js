@@ -220,6 +220,10 @@ function update_profile(){
 }
 
 
+
+
+
+
 function accept_listing() {
   listing_id = document.getElementById('listing_id').value;
   var params = 'listing_id='+listing_id;    

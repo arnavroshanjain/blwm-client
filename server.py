@@ -223,13 +223,13 @@ def user_select():
 		name = row['first_name']
 
 	return render_template('user_select.html', title='User select', name=name)
+
 @app.route('/teacherProfile')
 def teacherProfile():
 	return render_template('teacherProfile.html')
 
 
 @app.route('/user/<user_id>',methods=['POST','GET'])
-
 def show_user_profile(user_id):
 	if check_login()[0] != True:
 		return redirect(url_for('loginPage'))
@@ -304,7 +304,6 @@ def listed():
 
 	return render_template('jobListing.html', today=today,subs=subs,fields=fields)
 
-
 @app.route('/listing_delete', methods=['GET', 'POST'])
 def listing_delete():
 	listed = request.form['lists']
@@ -314,8 +313,6 @@ def listing_delete():
 	conn.close()
 
 	return redirect(url_for('listed'))
-
-
 
 @app.route('/listing_request', methods=['POST','GET'])
 def listing_request():
@@ -401,6 +398,22 @@ def accept_listing():
 	finally:
 		conn.close()
 		
+
+@app.route('/account')
+def account():
+
+	conn = get_db_connection()
+	user = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {session["login"]}')
+	conn.close()
+
+	user_type = check_login()
+	print ('oskadok', user_type[1])
+	if user_type[1] == 'teacher':
+		return(redirect(url_for('show_user_profile', user_id = session['login'])))
+	elif user_type[1] == 'school':
+		return(redirect(url_for('school_profile', school_id=user[0]['school_id'])))
+	else:
+		return redirect(url_for('homepage'))
 
 if __name__ == "__main__":
 	app.run(debug=True)
