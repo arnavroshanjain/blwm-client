@@ -403,7 +403,7 @@ def accept_listing():
 def account():
 
 	conn = get_db_connection()
-	user = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {session["login"]}')
+	user = conn.execute(f'SELECT * FROM tbl_users WHERE user_id = {session["login"]}').fetchall()
 	conn.close()
 
 	user_type = check_login()
