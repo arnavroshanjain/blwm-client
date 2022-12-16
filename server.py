@@ -86,11 +86,11 @@ def create_school_request():
 		return 'True'
 	return 'Failed to create school, please try again.'
 
-@app.route('/register/teacher')
+@app.route('/register/teacher', methods=['POST', 'GET'])
 def register_teacher():
 
 	if check_login()[0] != True:
-		return redirect(url_for('loginPage'))
+		return redirect(url_for('signUp'))
 	elif check_login()[1] != None:
 		return redirect(url_for('homepage'))
 	
@@ -103,6 +103,8 @@ def register_teacher():
 
 @app.route('/register/teacher_request', methods=['POST', 'GET'])
 def register_teacher_request():
+
+
 
 	if request.method == 'POST':  
 		subject_ids = request.form['subject_ids']
@@ -125,6 +127,8 @@ def register_teacher_request():
 				conn.execute(f'INSERT INTO tbl_teacher_keystages (keystage, user_id) VALUES ({keystage}, {session["login"]})')
 				conn.commit()
 		conn.execute('INSERT INTO tbl_teacher_description (user_id, description) VALUES (?, ?)', (session["login"], teacher_description))
+		conn.execute(f'UPDATE tbl_users SET supply_teacher = 1 WHERE user_id = {session["login"]}')
+		conn.commit()
 		conn.close()
 		return 'true'
 	except:
@@ -245,7 +249,6 @@ def update():
 		return "True"
 	except: 
 		return "False"
-		
 
 if __name__ == "__main__":
 	app.run(debug=True)

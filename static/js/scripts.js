@@ -86,7 +86,6 @@ function update_logo() {
   }
   const reader = new FileReader();
   reader.addEventListener("load", () => {
-    
     document.getElementById('pfp-select-label').classList.remove("btn-secondary");
     document.getElementById('pfp-select-label').classList.add("pfp-select-label");
     document.getElementById('pfp-select-label').innerHTML = '';
@@ -146,7 +145,7 @@ function teacher_request() {
   var ks3 = document.querySelector('#ks3').checked;
   var ks4 = document.querySelector('#ks4').checked;
   var ks5 = document.querySelector('#ks5').checked;
-
+   
   var params = 'subject_ids='+subjects_ids+'&teacher_description='+teacher_description+'&ks1='+ks1+'&ks2='+ks2+'&ks3='+ks3+'&ks4='+ks4+'&ks5='+ks5;
   var xhttp = new XMLHttpRequest();
   xhttp.open('POST', 'teacher_request', true);
@@ -156,6 +155,7 @@ function teacher_request() {
       var response = xhttp.responseText;
       if (response == 'true') {
         window.alert('Account created')
+        window.location.reload(true);
       } else {
         window.alert(response)
       }
