@@ -162,8 +162,10 @@ function teacher_request() {
     } else {
       console.error(xhttp.statusText);
     }
-  }
-};
+  };
+  xhttp.send(params);
+  return false;
+}
 
 function createJobListing() {
   var subject = document.getElementById('subject').value;
