@@ -243,3 +243,48 @@ function accept_listing() {
   return false;
 }
 
+function select_subject(subject_id, subject_name) {
+  subjects = document.getElementById('teacher_subjects').innerHTML
+  if (subjects.split(' ').includes(subject_id)) {
+    return
+  }
+  document.getElementById('selected_subjects').innerHTML += '<div class="col-3 bg-color rounded-pill m-1 p-1 ps-2 pe-2">'+subject_name+'<a class="float-end text-dark" onclick="remove_subject('+subject_id+',\''+subject_name+'\')"><i class="bi bi-x-circle"></i></a></div>';
+  document.getElementById('teacher_subjects').innerHTML +=  subject_id + ' ';
+}
+
+function remove_subject(subject_id, subject_name) {
+  selected_subjects = document.getElementById('selected_subjects').innerHTML;
+  selected_subjects_ids = document.getElementById('teacher_subjects').innerHTML;
+  document.getElementById('selected_subjects').innerHTML  = selected_subjects.replace('<div class="col-3 bg-color rounded-pill m-1 p-1 ps-2 pe-2">'+subject_name+'<a class="float-end text-dark" onclick="remove_subject('+subject_id+',\''+subject_name+'\')"><i class="bi bi-x-circle"></i></a></div>','');
+  document.getElementById('teacher_subjects').innerHTML = selected_subjects_ids.replace(subject_id+' ', '')
+}
+
+function teacher_request() {
+  var subjects_ids = document.getElementById('teacher_subjects').innerHTML;
+  var teacher_description = document.getElementById('teacher_description').value;
+  var ks1 = document.querySelector('#ks1').checked;
+  var ks2 = document.querySelector('#ks2').checked;
+  var ks3 = document.querySelector('#ks3').checked;
+  var ks4 = document.querySelector('#ks4').checked;
+  var ks5 = document.querySelector('#ks5').checked;
+   
+  var params = 'subject_ids='+subjects_ids+'&teacher_description='+teacher_description+'&ks1='+ks1+'&ks2='+ks2+'&ks3='+ks3+'&ks4='+ks4+'&ks5='+ks5;
+  var xhttp = new XMLHttpRequest();
+  xhttp.open('POST', 'teacher_request', true);
+  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState === 4 && xhttp.status === 200) {
+      var response = xhttp.responseText;
+      if (response == 'true') {
+        window.alert('Account created')
+        window.location.reload(true);
+      } else {
+        window.alert(response)
+      }
+    } else {
+      console.error(xhttp.statusText);
+    }
+  };
+  xhttp.send(params);
+  return false;
+}
