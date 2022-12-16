@@ -205,7 +205,7 @@ function update_profile(){
         if (response=="true"){
           window.alert("Information has been Updated");
           window.location.reload(true);
-        
+
         }else{
 
           window.alert(response)

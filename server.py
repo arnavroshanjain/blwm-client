@@ -231,6 +231,17 @@ def update_profile():
 	return 'true'
 
 
+
+	for row in school_id:
+		current_id=row['school_id']
+	conn.execute('INSERT INTO tbl_listings (school_id, listing_subject, listing_keystage, listing_date, listing_start_time, listing_end_time) VALUES (?,?, ?, ?, ?, ?)',
+	(current_id, subject, keystage, calendar, startTime, endTime))
+	conn.commit()
+	conn.close()
+
+	return render_template('jobListing.html')
+
+
 @app.route('/listing', methods=['POST','GET'])
 def listed():
 	today = date.today()
@@ -255,6 +266,8 @@ def listing_delete():
 	conn.close()
 
 	return redirect(url_for('listed'))
+
+
 
 @app.route('/listing_request', methods=['POST','GET'])
 def listing_request():
@@ -288,7 +301,7 @@ def school_profile(school_id):
 	conn.close()
 
 	return render_template('school_profile.html', title='School Profile', school_profile = school_info, today=today,subs=subs)
-	
+
 
 @app.route('/school_profile/update_school_info', methods=['POST','GET'] )
 def update():
