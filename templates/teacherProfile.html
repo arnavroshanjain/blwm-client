@@ -8,30 +8,6 @@
 
 <br>
 
-<!-- <form method="post" onsubmit="return update_profile()">
-  <!-- Adapted from https://getbootstrap.com/docs/5.2/forms/overview/-->
-  <!-- {% for row in user_info %}
-  <div class="mb-3">
-    <label for="inputFName" class="form-label">First Name</label>
-    <input value= "{{row['first_name']}}" type="text" class="form-control" id="inputFName" name="inputFName">
-  </div>
-  <div class="mb-3">
-    <label for="inputLName" class="form-label">Last Name</label>
-    <input value="{{row['last_name']}}" type="text" class="form-control" id="inputLName" name="inputLName">
-  </div>
-  <div class="mb-3">
-    <label for="inputEmail" class="form-label">Email address</label>
-    <input value="{{row['email']}}" type="email" class="form-control" id="inputEmail" name="inputEmail">
-  </div>
-  <div class="col text-center">
-    <button  type="submit" class="btn btn-warning" name="button">Update Deatils</button>
-  </div>
-  <input type="hidden" id="user_id" name="userId" value="{{row['user_id']}}">
-  {% endfor %} -->
-<!-- end of adapted code -->
-<!-- </form> -->
-
-
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
   <li class="nav-item" role="presentation">
     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">View Details</button>
@@ -46,24 +22,23 @@
   <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
       <!-- {{user_info}} -->
           {% for row in user %}
-          <h2 align=center> Welcome {{row['first_name']}} {{row['last_name']}},</h2>
+          <h2 class="title"align=center> Welcome {{row['first_name']}} {{row['last_name']}},</h2>
           <h3> Your Details: </h3>
-          <div class="col bg-white">
-            <div class="border border-dark">
+          <div class="col bg-white rounded p-2 shadow">
+            <div class="">
               <p><b>First Name: </b>{{row['first_name']}}</p>
               <p> <b>Last Name: </b>{{row['last_name']}}</p>
               <p> <b>Registered Email: </b>{{row['email']}}</p>
 
               {% endfor %}
+              <p><b> Keystages: </b></p>
+              {% for row in keystages %}
+                {{row['keystage']}}
+              {% endfor %}
               <p><b> Subjects Taught: </b></p>
               {% for row in subject_names %}
                 <p>{{row['subject_name']}}</p>
               {% endfor %}
-              <p><b> Keystages: </b></p>
-              {% for row in keystages %}
-                <p>{{row['keystage']}}</p>
-              {% endfor %}
-
               <p> <b> Description: </b></p>
               {% for row in description %}
                 <p>{{row['description']}}</p>

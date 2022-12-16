@@ -1,11 +1,5 @@
-function test(){
-  window.alert("hello")
-}
-
-
-
 function send_register(){
-  window.alert("hello")
+
     var name = document.getElementById('name').value;
     var lastName = document.getElementById('lastName').value;
     var email = document.getElementById('email').value;
@@ -128,6 +122,68 @@ function create_school_request() {
   return false;
 }
 
+function createJobListing() {
+  var subject = document.getElementById('subject').value;
+  var keystage = document.getElementById('keystage').value;
+  var date = document.getElementById('date').value;
+  var startTime = document.getElementById('startTime').value;
+  var endTime = document.getElementById('endTime').value;
+  var hidden_value = document.getElementById('id_school').value;
+  const time1 = (startTime);
+  const time2 = (endTime);
+
+  if (time1 > time2) {
+    return window.alert("Please enter a correct time")
+  }
+
+  var params = 'subject='+subject+'&keystage='+keystage+'&date='+date+'&startTime='+startTime+'&endTime='+endTime;
+  var xhttp = new XMLHttpRequest();
+  xhttp.open('POST','listing_request' , true);
+  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        var response = xhttp.responseText;
+        if (response == 'true') {
+          window.alert('Job listing successful')
+          window.location.replace('../');
+        } else {
+          window.alert(response);
+        }
+      } else {
+        console.error(xhttp.statusText);
+      }
+    };
+  xhttp.send(params);
+  return false;
+}
+
+function update() {
+  var school_name = document.getElementById('school_name').value;
+  var school_address = document.getElementById('school_address').value;
+  var school_logo = document.getElementById('school_logo').value;
+  var school_email = document.getElementById('school_email').value;
+  var school_phone_number = document.getElementById('school_phone_number').value;
+  var school_website = document.getElementById('school_website').value;
+  var school_id = document.getElementById('school_id').value;
+  var params = 'school_name='+school_name+'&school_address='+school_address+'&school_logo='+school_logo+'&school_email='+school_email+'&school_phone_number='+school_phone_number+'&school_website='+school_website+'&school_id='+school_id;
+  var xhttp = new XMLHttpRequest();
+  xhttp.open('POST', 'update_school_info', true);
+  xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        var response = xhttp.responseText;
+        if (response == 'True') {
+          window.location.reload(true);
+        } else {
+          window.alert(response);
+        }
+      } else {
+        console.error(xhttp.statusText);
+      }
+    };
+  xhttp.send(params);
+  return false;
+}
 
 function update_profile(){
   var firstName = document.getElementById('inputFName').value;
@@ -145,12 +201,11 @@ function update_profile(){
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
         var response = xhttp.responseText;
-        window.alert(response);
+
         if (response=="true"){
           window.alert("Information has been Updated");
-          window.location.replace('/user');
-          var userId = document.getElementById('user_id').value;
-          window.location.replace('/user/'+userId);
+          window.location.reload(true);
+        
         }else{
 
           window.alert(response)
