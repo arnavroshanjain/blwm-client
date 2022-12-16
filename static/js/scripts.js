@@ -129,7 +129,7 @@ function createJobListing() {
   var date = document.getElementById('date').value;
   var startTime = document.getElementById('startTime').value;
   var endTime = document.getElementById('endTime').value;
-  
+  var hidden_value = document.getElementById('id_school').value;
   const time1 = (startTime);
   const time2 = (endTime);
 
@@ -139,7 +139,7 @@ function createJobListing() {
 
   var params = 'subject='+subject+'&keystage='+keystage+'&date='+date+'&startTime='+startTime+'&endTime='+endTime;    
   var xhttp = new XMLHttpRequest();
-  xhttp.open('POST', 'listing_request', true);
+  xhttp.open('POST','listing_request' , true);
   xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {

@@ -16,7 +16,7 @@
                       <select id="subject" class="form-select" aria-label="Default select example" >
                         <option value="" selected disabled>Please select</option>
                         {% for row in subs %}
-                        <option value ="{{row['subject_id']}}">{{row['subject_name']}}{{row['subject_id']}}</option>
+                        <option value ="{{row['subject_id']}}">{{row['subject_name']}}</option>
                         {% endfor %}
                       </select>
                     </div>
@@ -40,17 +40,37 @@
                     <div class="mb-3">
                       <label for="endTime" class="form-label">End Time:</label>
                       <input type="time" class="form-control" id="endTime">
-                    </div>
-                            
+                      
+                    </div>  
             </div>
             <div class="modal-footer">
               <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Create listing</button>
             </div>
           </form>
           </div>
+          
         </div>
       </div>
       <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Create a school listing</a>
     </div>
+  </div>
+  
+  <div>
+    {% for row in fields %}
+    <div class="row bg-light rounded mb-3 shadow border p-2">
+      <div class="col">Subject:{{row['listing_subject']}}</div>
+      <div class="col">Keystage:{{row['listing_keystage']}}</div>
+      <div class="col">Date:{{row['listing_date']}}</div>
+      <div class="col">Start Time:{{row['listing_start_time']}}</div>
+      <div class="col">End Time:{{row['listing_end_time']}}</div>
+      <div class="col">
+        <form action="{{url_for('listing_delete')}}" method="post">
+           <input hidden type="text" value="{{row['listing_id']}}" id="lists" name="lists">
+           <button type="submit" class="btn btn-danger">DELETE</button>
+         </form>
+
+</div>
+    </div>
+    {% endfor %}
   </div>
 {% endblock %}

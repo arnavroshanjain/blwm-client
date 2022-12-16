@@ -175,17 +175,30 @@ def user_select():
 	return render_template('user_select.html', title='User select', name=name)
 
 
-@app.route('/listing')
+@app.route('/listing', methods=['POST','GET']) 
 def listed():
 	today = date.today()
 	
 	conn = get_db_connection()
 	subs = conn.execute(f"SELECT * FROM tbl_subjects").fetchall()
+
+
+	school_id = conn.execute(f'SELECT school_id FROM tbl_users WHERE user_id = {session["login"]}').fetchall()
+	fields = conn.execute(f'SELECT * FROM tbl_listings WHERE school_id = {school_id[0]["school_id"]}').fetchall()
 	conn.close()
 
+	return render_template('jobListing.html', today=today,subs=subs,fields=fields)
 
 
-	return render_template('jobListing.html', today=today,subs=subs)
+@app.route('/listing_delete', methods=['GET', 'POST'])
+def listing_delete():
+	listed = request.form['lists']
+	conn = get_db_connection()
+	conn.execute(f'DELETE FROM tbl_listings WHERE listing_id = {listed}')
+	conn.commit()
+	conn.close()
+	
+	return redirect(url_for('listed'))
 
 @app.route('/listing_request', methods=['POST','GET'])
 def listing_request():
@@ -201,7 +214,6 @@ def listing_request():
 	
 	for row in school_id:
 		current_id=row['school_id']
-		print(current_id)
 	conn.execute('INSERT INTO tbl_listings (school_id, listing_subject, listing_keystage, listing_date, listing_start_time, listing_end_time) VALUES (?,?, ?, ?, ?, ?)',
 	(current_id, subject, keystage, calendar, startTime, endTime))
 	conn.commit()
@@ -215,8 +227,10 @@ def school_profile(school_id):
 	conn=get_db_connection()
 	id = escape(school_id)
 	school_info = conn.execute(f'SELECT * FROM tbl_schools WHERE school_id = {id}').fetchall()
+	today = date.today()
+	subs = conn.execute(f"SELECT * FROM tbl_subjects").fetchall()
 	conn.close()
-	return render_template('school_profile.html', title='School Profile', school_profile = school_info)
+	return render_template('school_profile.html', title='School Profile', school_profile = school_info, today=today,subs=subs)
 	
 
 @app.route('/school_profile/update_school_info', methods=['POST','GET'] )
