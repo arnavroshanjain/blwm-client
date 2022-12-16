@@ -407,7 +407,6 @@ def account():
 	conn.close()
 
 	user_type = check_login()
-	print ('oskadok', user_type[1])
 	if user_type[1] == 'teacher':
 		return(redirect(url_for('show_user_profile', user_id = session['login'])))
 	elif user_type[1] == 'school':
