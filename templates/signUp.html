@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-
-    <form onsubmit="return send_register()" class="shadow-lg p-3 mb-5 bg-body rounded container">
+  <div class="container center md-5 p-5">
+    <form onsubmit="return send_register()" class="shadow p-3 mb-5 bg-body rounded container">
       <div class="mb-3">
         <label for="name" class="form-label">First Name:</label>
         <input type="text" class="form-control" id="name">
@@ -21,6 +21,6 @@
       <button type="submit" class="btn btn-color">Submit</button>
     </form>
 
-
+  </div>
 
 {% endblock %}
