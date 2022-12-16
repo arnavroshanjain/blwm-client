@@ -1,10 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 import sqlite3
-<<<<<<< HEAD
 from datetime import date 
-=======
-from datetime import date
->>>>>>> b29b3a0d8c0e89ac8dd16c2d13d3a3d5a2796df8
 from werkzeug.utils import secure_filename
 from markupsafe import escape
 
@@ -350,14 +346,8 @@ def school_profile(school_id):
 	today = date.today()
 	subs = conn.execute(f"SELECT * FROM tbl_subjects").fetchall()
 	conn.close()
-<<<<<<< HEAD
 	return render_template('school_profile.html', title='School Profile', school_profile = school_info, today=today,subs=subs)
 	
-=======
-
-	return render_template('school_profile.html', title='School Profile', school_profile = school_info, today=today,subs=subs)
-
->>>>>>> b29b3a0d8c0e89ac8dd16c2d13d3a3d5a2796df8
 
 @app.route('/school_profile/update_school_info', methods=['POST','GET'] )
 def update():
@@ -378,7 +368,6 @@ def update():
 		return "True"
 	except:
 		return "False"
-<<<<<<< HEAD
 		
 @app.route('/view_listings')
 def view_listings():
@@ -411,9 +400,6 @@ def accept_listing():
 	finally:
 		conn.close()
 		
-=======
-
->>>>>>> b29b3a0d8c0e89ac8dd16c2d13d3a3d5a2796df8
 
 if __name__ == "__main__":
 	app.run(debug=True)
